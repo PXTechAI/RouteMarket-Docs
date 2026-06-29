@@ -1,6 +1,5 @@
-import type { Route } from "next";
-import { redirect } from "next/navigation";
+import { LanguageRedirect } from "../components/language-redirect";
 
 export default function HomePage() {
-  redirect("/zh" as Route);
+  return <LanguageRedirect />;
 }

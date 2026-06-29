@@ -1,9 +1,9 @@
 ---
 title: Chat Completions
-description: The most common RouteLab API request shape and its RouteLab-specific extensions.
+description: The most common RouteMarket API request shape and its RouteMarket-specific extensions.
 ---
 
-`POST /v1/chat/completions` is the main RouteLab entrypoint for OpenAI-compatible chat requests.
+`POST /v1/chat/completions` is the main RouteMarket entrypoint for OpenAI-compatible chat requests.
 
 ## Endpoint
 
@@ -20,7 +20,7 @@ curl https://api.routemarket.ai/v1/chat/completions \
   -d '{
     "model": "gpt-5.4",
     "messages": [
-      { "role": "user", "content": "Say hello from RouteLab." }
+      { "role": "user", "content": "Say hello from RouteMarket." }
     ]
   }'
 ```
@@ -37,15 +37,15 @@ const client = new OpenAI({
 
 const completion = await client.chat.completions.create({
   model: "gpt-5.4",
-  messages: [{ role: "user", content: "Explain RouteLab in one sentence." }]
+  messages: [{ role: "user", content: "Explain RouteMarket in one sentence." }]
 });
 
 console.log(completion.choices[0]?.message?.content);
 ```
 
-## RouteLab extensions
+## RouteMarket extensions
 
-RouteLab supports extra request fields beyond the basic OpenAI-compatible payload.
+RouteMarket supports extra request fields beyond the basic OpenAI-compatible payload.
 
 ### `provider`
 
@@ -71,7 +71,7 @@ Target a specific route.
 
 ### `routing_preference`
 
-Give RouteLab a routing priority such as:
+Give RouteMarket a routing priority such as:
 
 - `lowest_price`
 - `highest_reliability`
@@ -98,9 +98,9 @@ Attach finer-grained constraints to source selection.
 }
 ```
 
-## What RouteLab may return in addition to text
+## What RouteMarket may return in addition to text
 
-RouteLab aims to keep usage and source selection visible. A successful response may include:
+RouteMarket aims to keep usage and source selection visible. A successful response may include:
 
 - `usage`
 - `provider`

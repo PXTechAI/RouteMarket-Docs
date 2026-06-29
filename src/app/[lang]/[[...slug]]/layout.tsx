@@ -23,7 +23,7 @@ export default async function Layout({ children, params }: DocsLayoutProps) {
       tree={source.getPageTree(lang)}
       i18n
       nav={{
-        title: lang === "zh" ? "RouteLab 文档" : "RouteLab Docs",
+        title: lang === "zh" ? "RouteMarket 文档" : "RouteMarket Docs",
         url: `/${lang}`
       }}
     >

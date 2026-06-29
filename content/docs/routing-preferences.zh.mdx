@@ -3,7 +3,7 @@ title: Routing Preferences
 description: How to think about lowest price, highest reliability, lowest latency, and official-only routing.
 ---
 
-RouteLab can accept a request-time routing preference to influence how it ranks candidate routes.
+RouteMarket can accept a request-time routing preference to influence how it ranks candidate routes.
 
 ## Supported first-pass values
 
@@ -18,7 +18,7 @@ The current design centers around these values:
 
 Use this when your main goal is cost efficiency.
 
-RouteLab will prefer lower-cost eligible routes after policy and health filtering.
+RouteMarket will prefer lower-cost eligible routes after policy and health filtering.
 
 Good fit for:
 
@@ -39,7 +39,7 @@ Example:
 
 Use this when success rate matters more than absolute cost.
 
-RouteLab will bias toward healthier and more stable routes.
+RouteMarket will bias toward healthier and more stable routes.
 
 Good fit for:
 
@@ -60,7 +60,7 @@ Example:
 
 Use this when response time matters most.
 
-RouteLab will bias toward lower-latency eligible routes.
+RouteMarket will bias toward lower-latency eligible routes.
 
 Good fit for:
 
@@ -79,7 +79,7 @@ Example:
 
 ## `official_only`
 
-Use this when you want RouteLab to avoid non-official provider paths and keep routing within official-compatible sources.
+Use this when you want RouteMarket to avoid non-official provider paths and keep routing within official-compatible sources.
 
 Good fit for:
 
@@ -100,7 +100,7 @@ Example:
 
 A routing preference is not a blind override.
 
-RouteLab still applies:
+RouteMarket still applies:
 
 - key and project policy
 - route visibility

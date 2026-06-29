@@ -1,38 +1,29 @@
 import type { Metadata } from "next";
-import Script from "next/script";
 import type { ReactNode } from "react";
+import { UmamiScript } from "../components/umami-script";
 import "./globals.css";
 
 const docsSiteUrl = process.env.NEXT_PUBLIC_DOCS_SITE_URL ?? "https://docs.routemarket.ai";
 const umamiWebsiteId =
   process.env.NEXT_PUBLIC_UMAMI_WEBSITE_ID ?? "39d75733-9690-472f-8d83-97fe6317468f";
-const umamiScriptUrl = process.env.NEXT_PUBLIC_UMAMI_SCRIPT_URL ?? "https://analytics.routemarket.ai/rm.js";
-const analyticsHostnames = new Set(["docs.routemarket.ai"]);
-const docsHostname = new URL(docsSiteUrl).hostname;
-const shouldLoadUmami = analyticsHostnames.has(docsHostname);
+const umamiScriptUrl =
+  process.env.NEXT_PUBLIC_UMAMI_SCRIPT_URL ?? "https://analytics.routemarket.ai/rm.js";
 
 export const metadata: Metadata = {
   metadataBase: new URL(docsSiteUrl),
   title: {
-    default: "RouteLab Docs",
-    template: "%s | RouteLab Docs"
+    default: "RouteMarket Docs",
+    template: "%s | RouteMarket Docs"
   },
-  description: "RouteLab product documentation powered by Fumadocs.",
-  applicationName: "RouteLab Docs"
+  description: "RouteMarket product documentation powered by Fumadocs.",
+  applicationName: "RouteMarket Docs"
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="zh-CN" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning>
       <body>
-        {shouldLoadUmami ? (
-          <Script
-            async
-            data-website-id={umamiWebsiteId}
-            src={umamiScriptUrl}
-            strategy="afterInteractive"
-          />
-        ) : null}
+        <UmamiScript scriptUrl={umamiScriptUrl} websiteId={umamiWebsiteId} />
         {children}
       </body>
     </html>

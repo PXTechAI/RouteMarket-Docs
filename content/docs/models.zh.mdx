@@ -1,9 +1,9 @@
 ---
 title: Models
-description: How RouteLab exposes logical models and how to discover what your key can use.
+description: How RouteMarket exposes logical models and how to discover what your key can use.
 ---
 
-In RouteLab, you usually request a **logical model name**, not a raw upstream provider model identifier.
+In RouteMarket, you usually request a **logical model name**, not a raw upstream provider model identifier.
 
 ## Logical models
 
@@ -26,7 +26,7 @@ curl https://api.routemarket.ai/v1/models \
 
 ## What model discovery should tell you
 
-The RouteLab model list is designed to expose more than just a name. Depending on the current implementation and policy, a model entry may include fields like:
+The RouteMarket model list is designed to expose more than just a name. Depending on the current implementation and policy, a model entry may include fields like:
 
 - logical model code
 - display name
@@ -40,7 +40,7 @@ The RouteLab model list is designed to expose more than just a name. Depending o
 This distinction matters:
 
 - **Logical model**: what you ask for in your request
-- **Source / route**: what RouteLab actually selects at runtime
+- **Source / route**: what RouteMarket actually selects at runtime
 
 That separation is what lets the platform do:
 

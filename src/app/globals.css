@@ -1,7 +1,7 @@
 @import "fumadocs-ui/css/style.css";
 
 :root {
-  color-scheme: dark;
+  color-scheme: light dark;
 }
 
 html,
@@ -9,7 +9,12 @@ body {
   min-height: 100%;
 }
 
+html {
+  background: var(--fd-background);
+}
+
 body {
   margin: 0;
-  background: #020617;
+  background: var(--fd-background);
+  color: var(--fd-foreground);
 }

@@ -1,9 +1,9 @@
 ---
 title: Responses
-description: The newer RouteLab response-style API surface and when to use it.
+description: The newer RouteMarket response-style API surface and when to use it.
 ---
 
-RouteLab also exposes a response-style API surface in addition to chat completions.
+RouteMarket also exposes a response-style API surface in addition to chat completions.
 
 ## Endpoint
 
@@ -25,20 +25,20 @@ curl https://api.routemarket.ai/api/gateway/v1/responses \
   -H "Authorization: Bearer $ROUTELAB_API_KEY" \
   -d '{
     "model": "gpt-5.4",
-    "input": "Explain RouteLab in one short paragraph."
+    "input": "Explain RouteMarket in one short paragraph."
   }'
 ```
 
 ## What stays the same
 
-Even though the request shape differs, the main RouteLab runtime ideas stay the same:
+Even though the request shape differs, the main RouteMarket runtime ideas stay the same:
 
 - you still request a logical model
 - your key policy still affects what can be used
-- RouteLab may still route across multiple candidate sources
+- RouteMarket may still route across multiple candidate sources
 - pricing, usage, and route metadata still matter
 
-## RouteLab-specific controls
+## RouteMarket-specific controls
 
 As with chat completions, the platform is designed to support request-time routing controls such as:
 

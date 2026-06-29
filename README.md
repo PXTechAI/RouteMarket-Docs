@@ -1,6 +1,6 @@
-# PX06-RouteLab-Docs
+# PX06-RouteMarket-Docs
 
-Standalone Fumadocs repository for the RouteLab public documentation site.
+Standalone Fumadocs repository for the RouteMarket public documentation site.
 
 ## Local Development
 

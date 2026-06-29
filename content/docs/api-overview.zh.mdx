@@ -1,13 +1,13 @@
 ---
 title: API 概览
-description: RouteLab 当前公开网关的兼容接口、扩展字段与常见错误约定。
+description: RouteMarket 当前公开网关的兼容接口、扩展字段与常见错误约定。
 ---
 
-RouteLab 的公开数据面以 **OpenAI 兼容 API** 为核心，目标是让现有 SDK 和调用方式可以尽量直接复用。
+RouteMarket 的公开数据面以 **OpenAI 兼容 API** 为核心，目标是让现有 SDK 和调用方式可以尽量直接复用。
 
 ## 主要入口
 
-RouteLab 当前的公开网关域名是：
+RouteMarket 当前的公开网关域名是：
 
 ```text
 https://api.routemarket.ai
@@ -40,9 +40,9 @@ Authorization: Bearer <api_key>
 }
 ```
 
-## RouteLab 扩展字段
+## RouteMarket 扩展字段
 
-在兼容 OpenAI 的前提下，RouteLab 增加了一些可选字段用于路由控制。
+在兼容 OpenAI 的前提下，RouteMarket 增加了一些可选字段用于路由控制。
 
 ### `provider`
 
@@ -107,7 +107,7 @@ Authorization: Bearer <api_key>
 
 ## 响应里的 usage 与来源信息
 
-RouteLab 的目标之一是让调用不再是黑盒，因此非流式响应通常会保留这些信息：
+RouteMarket 的目标之一是让调用不再是黑盒，因此非流式响应通常会保留这些信息：
 
 - `usage`
 - `provider`
@@ -151,9 +151,9 @@ RouteLab 的目标之一是让调用不再是黑盒，因此非流式响应通�
 
 如果你已经有基于 OpenAI SDK 的应用，通常最小改动就是：
 
-1. 把 `baseURL` 改成 RouteLab 网关
-2. 换成 RouteLab 的 API Key
-3. 把模型名换成 RouteLab 暴露的逻辑模型名
+1. 把 `baseURL` 改成 RouteMarket 网关
+2. 换成 RouteMarket 的 API Key
+3. 把模型名换成 RouteMarket 暴露的逻辑模型名
 4. 需要时再逐步增加 `routing_preference` 或 `provider`
 
 如果你想继续理解“平台为什么选中这条 route”，下一篇读 [路由与模型](./routing-and-models)。

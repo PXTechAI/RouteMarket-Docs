@@ -1,6 +1,6 @@
 ---
 title: Quickstart
-description: Make your first RouteLab request in a few minutes.
+description: Make your first RouteMarket request in a few minutes.
 ---
 
 This page assumes one goal: make a working request as fast as possible.
@@ -9,7 +9,7 @@ This page assumes one goal: make a working request as fast as possible.
 
 You need:
 
-- a RouteLab API key
+- a RouteMarket API key
 - the gateway URL `https://api.routemarket.ai`
 - a logical model name such as `gpt-5.4`
 
@@ -28,7 +28,7 @@ curl https://api.routemarket.ai/v1/chat/completions \
   -d '{
     "model": "gpt-5.4",
     "messages": [
-      { "role": "user", "content": "Say hello from RouteLab." }
+      { "role": "user", "content": "Say hello from RouteMarket." }
     ]
   }'
 ```
@@ -45,7 +45,7 @@ const client = new OpenAI({
 
 const completion = await client.chat.completions.create({
   model: "gpt-5.4",
-  messages: [{ role: "user", content: "Explain RouteLab in one sentence." }]
+  messages: [{ role: "user", content: "Explain RouteMarket in one sentence." }]
 });
 
 console.log(completion.choices[0]?.message?.content);
@@ -55,7 +55,7 @@ console.log(completion.choices[0]?.message?.content);
 
 The default request can stay simple.
 
-When you need more control, RouteLab also supports fields like:
+When you need more control, RouteMarket also supports fields like:
 
 - `provider`
 - `route`
@@ -76,7 +76,7 @@ Example:
 
 ## 5. Know what `model` means
 
-In RouteLab, `model` usually means a **logical model name**.
+In RouteMarket, `model` usually means a **logical model name**.
 
 That is not always the same thing as the final upstream provider model chosen at runtime.
 
