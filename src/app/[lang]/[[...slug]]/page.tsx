@@ -1,17 +1,24 @@
 import { notFound } from "next/navigation";
 import { DocsBody, DocsDescription, DocsPage, DocsTitle } from "fumadocs-ui/page";
 import defaultMdxComponents from "fumadocs-ui/mdx";
+import { isSupportedLanguage } from "../../../lib/i18n";
 import { source } from "../../../lib/source";
 
 type DocsPageProps = {
   params: Promise<{
+    lang: string;
     slug?: string[];
   }>;
 };
 
 export default async function Page({ params }: DocsPageProps) {
-  const { slug } = await params;
-  const page = source.getPage(slug);
+  const { lang, slug } = await params;
+
+  if (!isSupportedLanguage(lang)) {
+    notFound();
+  }
+
+  const page = source.getPage(slug, lang);
 
   if (!page) {
     notFound();
@@ -31,5 +38,5 @@ export default async function Page({ params }: DocsPageProps) {
 }
 
 export async function generateStaticParams() {
-  return source.generateParams();
+  return source.generateParams("slug", "lang");
 }

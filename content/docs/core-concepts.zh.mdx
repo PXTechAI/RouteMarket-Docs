@@ -1,0 +1,106 @@
+---
+title: 核心概念
+description: 先弄清逻辑模型、Provider、Asset、Pool 和 Route 之间的关系。
+---
+
+理解 RouteLab，最重要的是不要把“用户看到的模型名”和“系统实际调用的来源”混为一谈。
+
+## 逻辑模型
+
+逻辑模型是用户面向的平台统一模型名，例如：
+
+- `gpt-5.4`
+- `claude-sonnet-4`
+- `deepseek-reasoner`
+
+在 RouteLab 里，开发者大多数时候只需要请求逻辑模型。
+
+## Provider
+
+Provider 表示模型服务提供方，例如：
+
+- OpenAI
+- Anthropic
+- DeepSeek
+- Gemini
+- 其他第三方模型服务商
+
+它们在系统里属于同一层级，只是接入方式、价格、稳定性和能力标签不同。
+
+## Provider Model
+
+Provider Model 是某个 Provider 实际提供的模型标识。
+
+例如：
+
+- `openai/gpt-5.4`
+- `anthropic/claude-sonnet-4`
+- `vendor-a/gpt-5.4-compatible`
+
+逻辑模型和 Provider Model 不是一一对应关系。一个逻辑模型可以映射到多个 Provider Model。
+
+## Resource Asset
+
+Asset 是一条实际可调用资源。它可能是：
+
+- 平台自营 API Key
+- 用户自带官方 API Key
+- OAuth 账号
+- Session / Cookie 型连接
+- 自定义 endpoint 凭据
+
+你可以把它理解成“真正能拿去打上游请求的凭据或连接对象”。
+
+## Resource Pool
+
+Pool 是多个 Asset 的组织方式，也是平台对外暴露能力的治理边界。
+
+Pool 负责承载这些能力：
+
+- 可见性
+- 默认路由策略
+- 限额与预算
+- 是否允许共享来源
+- 是否允许手动选择来源
+
+## Model Route
+
+Route 是运行时最小的实际调度单元。
+
+一条 route 典型上会把这些东西串起来：
+
+- 逻辑模型
+- provider model
+- provider
+- pool
+- asset
+- 价格、风险、健康状态
+
+也就是说，**用户请求的是模型，系统选择的是 route**。
+
+## 一张简化的关系图
+
+```text
+Logical Model
+  -> Provider Model
+  -> Resource Asset
+  -> Resource Pool
+  -> Model Route
+  -> Gateway Request
+```
+
+更准确地说，是多个 Provider Model / Asset / Pool 组合出多条 Route，再由网关在运行时做选择。
+
+## 为什么要这么抽象
+
+这套分层主要是为了实现几个目标：
+
+- 同一个逻辑模型支持多个来源
+- 可以按价格、稳定性、延迟或风险进行自动路由
+- 用户可在允许的前提下手动指定 provider 或 route
+- 账单、用量和策略能和实际来源清晰关联
+
+## 接下来读什么
+
+- 如果你关心“请求是怎么选到最终来源的”，看 [路由与模型](./routing-and-models)
+- 如果你关心“具体怎么调接口”，看 [API 概览](./api-overview)

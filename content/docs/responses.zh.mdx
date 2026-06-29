@@ -1,0 +1,57 @@
+---
+title: Responses
+description: The newer RouteLab response-style API surface and when to use it.
+---
+
+RouteLab also exposes a response-style API surface in addition to chat completions.
+
+## Endpoint
+
+```text
+POST https://api.routemarket.ai/api/gateway/v1/responses
+```
+
+## Why this endpoint exists
+
+`chat/completions` is the easiest compatibility entrypoint.
+
+`responses` is the better fit when you want a more future-facing request surface for richer response workflows.
+
+## Minimal request shape
+
+```bash
+curl https://api.routemarket.ai/api/gateway/v1/responses \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer $ROUTELAB_API_KEY" \
+  -d '{
+    "model": "gpt-5.4",
+    "input": "Explain RouteLab in one short paragraph."
+  }'
+```
+
+## What stays the same
+
+Even though the request shape differs, the main RouteLab runtime ideas stay the same:
+
+- you still request a logical model
+- your key policy still affects what can be used
+- RouteLab may still route across multiple candidate sources
+- pricing, usage, and route metadata still matter
+
+## RouteLab-specific controls
+
+As with chat completions, the platform is designed to support request-time routing controls such as:
+
+- `provider`
+- `route`
+- `routing_preference`
+- `source_policy`
+
+If you are choosing between the two APIs, a practical rule is:
+
+- use **chat completions** when you want maximum ecosystem familiarity
+- use **responses** when you want a cleaner modern API surface for new integrations
+
+## Next step
+
+If you are starting from existing OpenAI-compatible code, read [Chat Completions](./chat-completions).
