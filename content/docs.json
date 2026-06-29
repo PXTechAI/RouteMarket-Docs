@@ -1,0 +1,18 @@
+{
+  "title": "RouteLab Docs",
+  "pages": [
+    "index",
+    "quickstart",
+    "authentication",
+    "models",
+    "chat-completions",
+    "responses",
+    "code-examples",
+    "routing-and-models",
+    "routing-preferences",
+    "errors",
+    "architecture",
+    "deployment",
+    "faq"
+  ]
+}

@@ -1,0 +1,118 @@
+---
+title: 系统架构
+description: RouteLab 仓库当前公开可见的服务边界与职责划分。
+---
+
+RouteLab 当前采用的是一套清晰的多服务结构，目标是在保持边界清楚的前提下，不把 V1 过早拆成过多微服务。
+
+## 当前核心运行单元
+
+RouteLab 主要由四个应用组成：
+
+- `web`
+- `core-api`
+- `gateway`
+- `connector-service`
+
+## `web`
+
+`web` 是 Next.js 前端，主要负责：
+
+- 主站
+- 控制台
+- 管理后台
+- 发现页
+
+它偏向产品展示和控制台交互，不承担真实网关转发。
+
+## `core-api`
+
+`core-api` 是控制面业务后端，负责：
+
+- 用户、组织、项目等业务数据
+- 资源池、模型、策略与控制面接口
+- 内部路由策略下发
+- 用量读取、聚合查询与业务治理
+
+你可以把它理解成整个平台的主业务控制层。
+
+## `gateway`
+
+`gateway` 是公开 API 数据面，负责：
+
+- 提供 OpenAI 兼容接口
+- 做请求标准化
+- 根据策略进行 route 选择
+- 调用上游 provider
+- 回写 usage 与计费相关数据
+
+它面向开发者调用，是 `api.routemarket.ai` 背后的主要服务。
+
+## `connector-service`
+
+`connector-service` 负责高风险或会话型来源，主要包括：
+
+- OAuth / session 连接
+- 共享账号会话保活
+- 状态同步
+- 高风险来源隔离
+
+这部分被单独隔离，是因为它和普通官方 API Key 的稳定性、风险模型都不同。
+
+## 推荐的理解方式
+
+可以把当前系统粗略看成三层：
+
+```text
+Web / Console
+    -> Control Plane (core-api)
+    -> Gateway Plane (gateway)
+    -> Connector Domain (connector-service)
+```
+
+## 为什么这样拆
+
+这样的边界有几个直接好处：
+
+- `web` 可以专注前端产品体验
+- `gateway` 可以专注请求转发与兼容 API
+- `core-api` 保持业务事实来源统一
+- 高风险连接域不会直接污染主业务主链路
+
+## Monorepo 结构
+
+仓库当前大致是这种组织方式：
+
+```text
+apps/
+  web/
+  docs/
+  core-api/
+  gateway/
+  connector-service/
+packages/
+  database/
+  routing-engine/
+  billing-engine/
+  shared-utils/
+docs/
+```
+
+其中：
+
+- `apps/*` 放运行应用
+- `packages/*` 放共享能力与基础包
+- `apps/docs` 是现在这套独立 Fumadocs 文档站
+
+## 文档站在架构里的位置
+
+现在文档站不是挂在 `web` 里的占位页，而是独立的 `docs` 应用：
+
+- 有自己的 Next app
+- 有自己的 Docker target
+- 有自己的生产服务
+- 通过 `docs.routemarket.ai` 暴露
+
+## 什么时候继续看部署
+
+如果你关心“这几个服务在线上是怎么拼起来的”，继续看 [部署说明](./deployment)。

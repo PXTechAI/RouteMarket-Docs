@@ -1,0 +1,159 @@
+---
+title: API 概览
+description: RouteLab 当前公开网关的兼容接口、扩展字段与常见错误约定。
+---
+
+RouteLab 的公开数据面以 **OpenAI 兼容 API** 为核心，目标是让现有 SDK 和调用方式可以尽量直接复用。
+
+## 主要入口
+
+RouteLab 当前的公开网关域名是：
+
+```text
+https://api.routemarket.ai
+```
+
+常用接口包括：
+
+- `POST /v1/chat/completions`
+- `POST /api/gateway/v1/chat/completions`（兼容别名）
+- `POST /api/gateway/v1/responses`
+- `POST /api/gateway/v1/embeddings`
+- `GET /v1/models`
+
+## 鉴权方式
+
+公开网关使用项目级 API Key：
+
+```http
+Authorization: Bearer <api_key>
+```
+
+## 基础请求示例
+
+```json
+{
+  "model": "gpt-5.4",
+  "messages": [
+    { "role": "user", "content": "hello" }
+  ]
+}
+```
+
+## RouteLab 扩展字段
+
+在兼容 OpenAI 的前提下，RouteLab 增加了一些可选字段用于路由控制。
+
+### `provider`
+
+指定只在某个 provider 下进行选路。
+
+```json
+{
+  "model": "gpt-5.4",
+  "provider": "openai"
+}
+```
+
+### `route`
+
+指定某个精确 route。
+
+```json
+{
+  "model": "gpt-5.4",
+  "route": "route_openai_primary"
+}
+```
+
+### `routing_preference`
+
+给平台一个明确的选路倾向。当前设计里常见值包括：
+
+- `lowest_price`
+- `highest_reliability`
+- `lowest_latency`
+- `official_only`
+
+```json
+{
+  "model": "gpt-5.4",
+  "routing_preference": "lowest_price"
+}
+```
+
+### `source_policy`
+
+用于附加更细粒度的来源约束。
+
+```json
+{
+  "model": "gpt-5.4",
+  "source_policy": {
+    "exclude_risk_levels": ["high"]
+  }
+}
+```
+
+## `GET /v1/models`
+
+这个接口返回当前 API Key 可用的逻辑模型列表。
+
+根据设计，返回内容除了基础模型字段，也可以包含：
+
+- `source_count`
+- `from_price`
+- `supports_manual_source_selection`
+
+## 响应里的 usage 与来源信息
+
+RouteLab 的目标之一是让调用不再是黑盒，因此非流式响应通常会保留这些信息：
+
+- `usage`
+- `provider`
+- `route`
+- `pricing`
+
+示例结构：
+
+```json
+{
+  "model": "gpt-5.4",
+  "provider": "openai",
+  "route": "route_openai_primary",
+  "usage": {
+    "prompt_tokens": 120,
+    "completion_tokens": 300,
+    "total_tokens": 420
+  },
+  "pricing": {
+    "currency": "USD",
+    "cost_amount": "0.00120000",
+    "sale_amount": "0.00150000"
+  }
+}
+```
+
+## 常见错误语义
+
+网关错误会尽量兼容 OpenAI 风格，但补充平台语义。第一批应该先理解这些错误含义：
+
+- `PROJECT_KEY_INVALID`
+- `PROJECT_KEY_DISABLED`
+- `MODEL_NOT_ALLOWED`
+- `NO_AVAILABLE_ROUTE`
+- `ROUTE_NOT_SELECTABLE`
+- `INSUFFICIENT_BALANCE`
+- `POOL_LIMIT_EXCEEDED`
+- `PROVIDER_TEMPORARILY_UNAVAILABLE`
+
+## 实际接入建议
+
+如果你已经有基于 OpenAI SDK 的应用，通常最小改动就是：
+
+1. 把 `baseURL` 改成 RouteLab 网关
+2. 换成 RouteLab 的 API Key
+3. 把模型名换成 RouteLab 暴露的逻辑模型名
+4. 需要时再逐步增加 `routing_preference` 或 `provider`
+
+如果你想继续理解“平台为什么选中这条 route”，下一篇读 [路由与模型](./routing-and-models)。

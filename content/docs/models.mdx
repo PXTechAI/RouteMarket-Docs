@@ -1,0 +1,64 @@
+---
+title: Models
+description: How RouteLab exposes logical models and how to discover what your key can use.
+---
+
+In RouteLab, you usually request a **logical model name**, not a raw upstream provider model identifier.
+
+## Logical models
+
+A logical model is the stable name exposed by the platform, for example:
+
+- `gpt-5.4`
+- `claude-sonnet-4`
+- `deepseek-reasoner`
+
+A logical model can map to more than one real upstream source.
+
+## List available models
+
+Use `GET /v1/models` to list the models available to your API key.
+
+```bash
+curl https://api.routemarket.ai/v1/models \
+  -H "Authorization: Bearer $ROUTELAB_API_KEY"
+```
+
+## What model discovery should tell you
+
+The RouteLab model list is designed to expose more than just a name. Depending on the current implementation and policy, a model entry may include fields like:
+
+- logical model code
+- display name
+- `from_price`
+- `source_count`
+- capability flags
+- whether manual source selection is supported
+
+## Logical model vs source
+
+This distinction matters:
+
+- **Logical model**: what you ask for in your request
+- **Source / route**: what RouteLab actually selects at runtime
+
+That separation is what lets the platform do:
+
+- automatic routing
+- fallback
+- price-aware selection
+- reliability-aware selection
+- project-specific model governance
+
+## When to care about the actual source
+
+Most clients do not need to care.
+
+You only need to look deeper when you want to:
+
+- pin a provider
+- pin a route
+- compare source behavior
+- explain pricing or latency differences
+
+If that is your use case, continue with [Routing](./routing-and-models).

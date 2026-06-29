@@ -1,0 +1,111 @@
+---
+title: Code Examples
+description: Copy-paste examples for curl, JavaScript, and Python-style OpenAI clients.
+---
+
+This page collects the shortest useful request examples.
+
+## curl: list models
+
+```bash
+curl https://api.routemarket.ai/v1/models \
+  -H "Authorization: Bearer $ROUTELAB_API_KEY"
+```
+
+## curl: basic chat completion
+
+```bash
+curl https://api.routemarket.ai/v1/chat/completions \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer $ROUTELAB_API_KEY" \
+  -d '{
+    "model": "gpt-5.4",
+    "messages": [
+      { "role": "user", "content": "Say hello from RouteLab." }
+    ]
+  }'
+```
+
+## curl: route with a preference
+
+```bash
+curl https://api.routemarket.ai/v1/chat/completions \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer $ROUTELAB_API_KEY" \
+  -d '{
+    "model": "gpt-5.4",
+    "messages": [
+      { "role": "user", "content": "Summarize the platform in one sentence." }
+    ],
+    "routing_preference": "highest_reliability"
+  }'
+```
+
+## JavaScript / TypeScript
+
+```ts
+import OpenAI from "openai";
+
+const client = new OpenAI({
+  apiKey: process.env.ROUTELAB_API_KEY,
+  baseURL: "https://api.routemarket.ai/v1"
+});
+
+const result = await client.chat.completions.create({
+  model: "gpt-5.4",
+  messages: [
+    { role: "system", content: "Be concise." },
+    { role: "user", content: "What is RouteLab?" }
+  ]
+});
+
+console.log(result.choices[0]?.message?.content);
+```
+
+## Python-style OpenAI client
+
+```python
+from openai import OpenAI
+import os
+
+client = OpenAI(
+    api_key=os.environ["ROUTELAB_API_KEY"],
+    base_url="https://api.routemarket.ai/v1",
+)
+
+result = client.chat.completions.create(
+    model="gpt-5.4",
+    messages=[
+        {"role": "user", "content": "What does RouteLab do?"}
+    ],
+)
+
+print(result.choices[0].message.content)
+```
+
+## JavaScript: pin a provider
+
+```ts
+const result = await client.chat.completions.create({
+  model: "gpt-5.4",
+  provider: "openai",
+  messages: [{ role: "user", content: "Use the OpenAI path." }]
+});
+```
+
+## JavaScript: use a routing preference
+
+```ts
+const result = await client.chat.completions.create({
+  model: "gpt-5.4",
+  routing_preference: "lowest_price",
+  messages: [{ role: "user", content: "Choose the cheapest allowed route." }]
+});
+```
+
+## Where to go next
+
+- [Authentication](./authentication)
+- [Models](./models)
+- [Chat Completions](./chat-completions)
+- [Routing Preferences](./routing-preferences)

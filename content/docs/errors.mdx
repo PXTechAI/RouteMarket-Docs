@@ -1,0 +1,91 @@
+---
+title: Errors
+description: First-pass guide to the most important RouteLab API error categories.
+---
+
+RouteLab tries to keep gateway errors understandable, especially when a request fails because of key policy, model governance, or route availability.
+
+## Common error codes
+
+### `PROJECT_KEY_INVALID`
+
+The API key is missing, malformed, unknown, or no longer valid.
+
+Check:
+
+- the `Authorization` header
+- the environment variable you are loading
+- whether the key was rotated or removed
+
+### `PROJECT_KEY_DISABLED`
+
+The key exists, but it is disabled.
+
+Check whether the key was intentionally turned off or replaced.
+
+### `MODEL_NOT_ALLOWED`
+
+Your key or project policy does not allow access to the requested logical model.
+
+This is usually a governance or allowlist issue, not a transport issue.
+
+### `ROUTE_NOT_SELECTABLE`
+
+You explicitly requested a route or source that your current key is not allowed to use, or that is not selectable.
+
+This usually happens when using `route` or `provider` overrides.
+
+### `NO_AVAILABLE_ROUTE`
+
+RouteLab could not find any route that satisfies the request and current policy.
+
+Typical causes:
+
+- no healthy source is currently available
+- the key policy filtered everything out
+- the requested provider or route was too restrictive
+- the model has no active route in the current environment
+
+### `INSUFFICIENT_BALANCE`
+
+The current wallet, project, or usage context cannot cover the request.
+
+### `POOL_LIMIT_EXCEEDED`
+
+A pool-level quota or limit has been reached.
+
+### `PROVIDER_TEMPORARILY_UNAVAILABLE`
+
+The selected upstream provider or route is temporarily failing, degraded, or unavailable.
+
+## How to debug a failed request
+
+A good first-pass debugging order is:
+
+1. confirm the key is valid
+2. confirm the model is allowed
+3. remove any `provider` or `route` override
+4. retry with a simpler request
+5. inspect route policy and source health if available internally
+
+## Practical debugging tip
+
+When troubleshooting, start from the most permissive request shape:
+
+```json
+{
+  "model": "gpt-5.4",
+  "messages": [
+    { "role": "user", "content": "hello" }
+  ]
+}
+```
+
+Then add back:
+
+- `routing_preference`
+- `provider`
+- `route`
+- `source_policy`
+
+one by one.

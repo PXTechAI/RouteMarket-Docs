@@ -1,0 +1,69 @@
+---
+title: Authentication
+description: How to authenticate requests to the RouteLab API.
+---
+
+RouteLab uses **API keys** for public gateway requests.
+
+## Base URL
+
+Use the production gateway URL:
+
+```text
+https://api.routemarket.ai
+```
+
+If you are using an OpenAI-compatible SDK, the base URL is typically:
+
+```text
+https://api.routemarket.ai/v1
+```
+
+## Authorization header
+
+Send your key in the `Authorization` header:
+
+```http
+Authorization: Bearer <your_api_key>
+```
+
+## curl example
+
+```bash
+curl https://api.routemarket.ai/v1/models \
+  -H "Authorization: Bearer $ROUTELAB_API_KEY"
+```
+
+## OpenAI SDK example
+
+```ts
+import OpenAI from "openai";
+
+const client = new OpenAI({
+  apiKey: process.env.ROUTELAB_API_KEY,
+  baseURL: "https://api.routemarket.ai/v1"
+});
+```
+
+## What the key controls
+
+A RouteLab API key is not only a credential. It can also affect runtime behavior through project and key-level policy, including:
+
+- model access
+- route visibility
+- routing preference
+- usage limits
+- budget or rate constraints
+
+That means two keys may not see the same model list or route behavior.
+
+## Common auth failures
+
+Typical authentication-related failures include:
+
+- `PROJECT_KEY_INVALID`
+- `PROJECT_KEY_DISABLED`
+- `PROJECT_LIMIT_EXCEEDED`
+- `INSUFFICIENT_BALANCE`
+
+See [Errors](./errors) for the first-pass error guide.
