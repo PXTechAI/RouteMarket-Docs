@@ -1,0 +1,23 @@
+---
+title: 4. Create an API token
+description: Create an API token in the console that you can use to make requests.
+---
+
+Open the "Token Management" page in the console and click "Add token".
+
+<DocImage src="/images/docs/getting-started/token.png" alt="RouteMarket create token page" caption="Placeholder — replace with an actual screenshot of the token creation page." />
+
+## Form fields
+
+| Field | Description |
+| --- | --- |
+| Token name | A recognizable name, e.g. `dev` or `production` |
+| Token group | Determines which models this token can access — see [Model Marketplace](/en/routing-and-models/model-marketplace) |
+| Expiration | Defaults to "Never expires"; adjust as needed |
+| Quantity | Create multiple tokens at once |
+| Quota | Set a usage cap for this token, or leave unlimited |
+| Access restrictions | Optional IP allowlist or model restrictions |
+
+The key is usually shown in full only once — save it immediately to a password manager or your deployment platform's secret store. Never commit it to frontend code, public repos, or support tickets.
+
+Once created, continue to [Check your environment](/en/getting-started/env-check).

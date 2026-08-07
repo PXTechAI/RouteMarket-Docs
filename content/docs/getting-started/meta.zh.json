@@ -1,0 +1,13 @@
+{
+  "title": "注册与开通",
+  "defaultOpen": true,
+  "pages": [
+    "index",
+    "register",
+    "login",
+    "quota",
+    "token",
+    "env-check",
+    "cli-setup"
+  ]
+}

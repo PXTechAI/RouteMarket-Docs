@@ -1,0 +1,9 @@
+{
+  "title": "官方客户端",
+  "defaultOpen": true,
+  "pages": [
+    "index",
+    "clients-claude-desktop",
+    "clients-chatgpt-desktop"
+  ]
+}

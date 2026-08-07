@@ -1,0 +1,32 @@
+---
+title: IDE / 编辑器插件
+description: 在 VS Code 等编辑器的 AI 插件中配置 RouteMarket 端点。
+---
+
+许多 IDE / 编辑器插件（例如 VS Code 中的 AI 编码助手类扩展）允许在设置中自定义 API 提供方，可以直接指向 RouteMarket。
+
+> 常见的此类插件包括 [OpenCode](/zh/integrations/integrations-opencode) 的编辑器扩展等——以下仅作为该类工具的社区常见示例列出，并非 RouteMarket 官方验证或支持的工具列表，具体能否接入请以实际测试为准。
+
+## 配置步骤（以 VS Code 风格插件为例）
+
+1. 安装目标插件，并在扩展设置中找到「API Provider」或「自定义端点」相关配置项。
+2. 选择 「OpenAI 兼容」或「Custom / Self-hosted」作为提供方类型。
+3. Base URL 填入 `https://api.routemarket.ai/v1`。
+4. API Key 填入你的 [·API 密钥](/zh/getting-started/token)。
+5. 在模型选择下拉框中手动输入或选择模型名称。
+
+<DocImage src="/images/docs/integrations/ide-extension-setup.png" alt="IDE 插件配置 RouteMarket 端点" caption="占位图：待替换为实际插件设置界面截图。" />
+
+## 常见配置项对照
+
+| 插件通用字段 | 对应 RouteMarket 值 |
+| --- | --- |
+| API Base URL / Endpoint | `https://api.routemarket.ai/v1` |
+| API Key | 你的 [·API 密钥](/zh/getting-started/token) |
+| Model | 控制台中该密钥分组下可用的模型名称 |
+
+## 验证
+
+在编辑器中打开插件的对话面板，发送一条简单指令（例如「解释这个函数」），确认能正常收到响应，且没有出现 401 / 403 鉴权错误。
+
+如遇到鉴权失败，检查密钥是否正确、是否已过期，或参考 [常见问题](/zh/faq2/faq-cc)。

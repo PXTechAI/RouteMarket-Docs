@@ -1,0 +1,29 @@
+---
+title: ChatGPT Desktop
+description: 把 ChatGPT Desktop 客户端指向 RouteMarket 的网关地址。
+---
+
+{/* TODO: 确认 ChatGPT Desktop 当前版本是否支持自定义 API 端点，以及具体入口位置 */}
+
+## 下载
+
+前往 [OpenAI 官网](https://openai.com/chatgpt/download/) 下载适合你操作系统的 ChatGPT Desktop 客户端。
+
+## 配置自定义端点
+
+<DocImage src="/images/docs/clients/chatgpt-desktop-setup.png" alt="ChatGPT Desktop 自定义 API 端点配置" caption="占位图：待替换为实际配置界面截图。" />
+
+1. 打开 ChatGPT Desktop，进入「设置」中的账户或连接相关选项。
+2. 找到自定义 API 端点的输入框，填入 `https://api.routemarket.ai/v1`。
+3. 输入你的 [·API 密钥](/zh/getting-started/token) 作为 API Key。
+4. 保存设置。
+
+## 网络与代理说明
+
+如果你所在网络环境需要走代理才能访问外部服务，请确认客户端使用的代理设置能正常访问 `api.routemarket.ai`。
+
+## 测试
+
+保存配置后，新建一次对话，发送一条简单消息，确认能正常收到回复。
+
+如果客户端不支持自定义端点，可改用命令行版本的 [Codex](/zh/cli/cli-codex)，或直接调用 [API](/zh/api)。

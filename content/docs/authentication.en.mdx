@@ -31,7 +31,7 @@ Authorization: Bearer <your_api_key>
 
 ```bash
 curl https://api.routemarket.ai/v1/models \
-  -H "Authorization: Bearer $ROUTELAB_API_KEY"
+  -H "Authorization: Bearer $ROUTEMARKET_API_KEY"
 ```
 
 ## OpenAI SDK example
@@ -40,7 +40,7 @@ curl https://api.routemarket.ai/v1/models \
 import OpenAI from "openai";
 
 const client = new OpenAI({
-  apiKey: process.env.ROUTELAB_API_KEY,
+  apiKey: process.env.ROUTEMARKET_API_KEY,
   baseURL: "https://api.routemarket.ai/v1"
 });
 ```
@@ -65,5 +65,3 @@ Typical authentication-related failures include:
 - `PROJECT_KEY_DISABLED`
 - `PROJECT_LIMIT_EXCEEDED`
 - `INSUFFICIENT_BALANCE`
-
-See [Errors](./errors) for the first-pass error guide.

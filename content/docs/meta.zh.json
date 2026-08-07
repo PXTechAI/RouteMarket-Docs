@@ -1,0 +1,18 @@
+{
+  "title": "RouteMarket 文档",
+  "pages": [
+    "index",
+    "getting-started",
+    "quickstart",
+    "authentication",
+    "code-examples",
+    "routing-and-models",
+    "faq",
+    "guide",
+    "cli",
+    "paint",
+    "clients",
+    "integrations",
+    "api"
+  ]
+}

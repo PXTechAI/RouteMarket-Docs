@@ -1,0 +1,137 @@
+---
+title: "GPT Image 2"
+description: "OpenAI 图片接口格式的生成与编辑"
+---
+
+本页整理 RouteMarket 的 **GPT Image 2** 兼容接口，包括可识别的端点、结构化参数和请求示例。
+
+> 兼容性提示：页面由公开协议中的技术字段生成。具体模型、额度和路由能力以 RouteMarket 控制台及实际网关响应为准。
+
+## 参数参考
+
+### 参数表 1
+
+| 能力 | 方法 | 路径 | 请求格式 |
+| ---- | ------ | ------------------------ | --------------------- |
+| 图片生成 | `POST` | `/v1/images/generations` | `application/json` |
+| 图片编辑 | `POST` | `/v1/images/edits` | `multipart/form-data` |
+
+### 参数表 2
+
+| 比例 | 1K | 2K | 4K |
+| ------ | ----------- | ----------- | ----------- |
+| `1:1` | `1254x1254` | `2048x2048` | `2880x2880` |
+| `5:4` | `1402x1122` | `2240x1792` | `3200x2560` |
+| `4:3` | `1448x1086` | `2304x1728` | `3264x2448` |
+| `3:2` | `1536x1024` | `2496x1664` | `3504x2336` |
+| `16:9` | `1672x941` | `2560x1440` | `3840x2160` |
+| `21:9` | `1915x821` | `3024x1296` | `3696x1584` |
+| `4:5` | `1122x1402` | `1792x2240` | `2560x3200` |
+| `3:4` | `1086x1448` | `1728x2304` | `2448x3264` |
+| `2:3` | `1024x1536` | `1664x2496` | `2336x3504` |
+| `9:16` | `941x1672` | `1440x2560` | `2160x3840` |
+
+### 参数表 3
+
+| 状态码 | 说明 |
+| ----- | ------------------------------------ |
+| `400` | 相关值：`size`、`quality` |
+| `401` | - |
+| `402` | - |
+| `403` | - |
+| `429` | - |
+| `502` | - |
+
+## 请求与响应示例
+
+### 示例 1
+
+```text
+Authorization: Bearer $ROUTEMARKET_API_KEY
+```
+
+### 示例 2
+
+```bash
+curl https://api.routemarket.ai/v1/images/generations \
+  -H "Authorization: Bearer $ROUTEMARKET_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "model": "gpt-image-2",
+    "prompt": "一张干净的 SaaS 产品宣传图，浅色背景，真实设备展示",
+    "size": "1536x1024",
+    "quality": "high",
+    "response_format": "url"
+  }'
+```
+
+### 示例 3
+
+```bash
+curl https://api.routemarket.ai/v1/images/edits \
+  -H "Authorization: Bearer $ROUTEMARKET_API_KEY" \
+  -F "model=gpt-image-2" \
+  -F "prompt=保留主体，把背景改成明亮的现代办公室" \
+  -F "image=@input.png" \
+  -F "size=1024x1024" \
+  -F "quality=high" \
+  -F "response_format=url"
+```
+
+### 示例 4
+
+```json
+{
+  "created": 1760000000,
+  "data": [
+    {
+      "b64_json": "<BASE64_IMAGE_DATA>",
+      "revised_prompt": "优化后的提示词"
+    }
+  ]
+}
+```
+
+### 示例 5
+
+```json
+{
+  "created": 1760000000,
+  "data": [
+    {
+      "url": "https://img.example.com/images/example.png",
+      "revised_prompt": "优化后的提示词"
+    }
+  ]
+}
+```
+
+### 示例 6
+
+```python
+from openai import OpenAI
+
+client = OpenAI(
+    api_key="sk-xxx",
+    base_url="https://api.routemarket.ai/v1",
+)
+
+result = client.images.generate(
+    model="gpt-image-2",
+    prompt="一张干净的 SaaS 产品宣传图，浅色背景，真实设备展示",
+    size="1536x1024",
+    quality="high",
+    response_format="url",
+)
+
+print(result.data[0].url)
+```
+
+## 接入说明
+
+- API 基础地址：`https://api.routemarket.ai`
+- 推荐密钥环境变量：`ROUTEMARKET_API_KEY`
+- 请求使用 `Authorization: Bearer <API_KEY>`。
+- 上线前请用实际账号验证端点、模型名、限额与异步任务状态。
+
+{/* migration-source-path: /docs/api/gpt-image */}

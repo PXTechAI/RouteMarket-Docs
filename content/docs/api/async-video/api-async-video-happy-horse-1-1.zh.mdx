@@ -1,0 +1,86 @@
+---
+title: "Happy Horse 1.1"
+description: "happy-horse-1.1 多参考图视频生成参数和轮询示例"
+---
+
+本页整理 RouteMarket 的 **Happy Horse 1.1** 兼容接口，包括可识别的端点、结构化参数和请求示例。
+
+> 兼容性提示：页面由公开协议中的技术字段生成。具体模型、额度和路由能力以 RouteMarket 控制台及实际网关响应为准。
+
+## 参数参考
+
+### 参数表 1
+
+| 能力 | 方法 | 路径 |
+| ---- | ------ | -------------------- |
+| 提交任务 | `POST` | `/v1/task/submit` |
+| 查询任务 | `GET` | `/v1/task/{task_id}` |
+
+### 参数表 2
+
+| aspect\_ratio | 720p | 1080p |
+| ------------- | ---------- | ----------- |
+| `1:1` | `960x960` | `1440x1440` |
+| `3:4` | `832x1108` | `1248x1662` |
+| `4:3` | `1108x832` | `1662x1248` |
+| `16:9` | `1280x720` | `1920x1080` |
+| `9:16` | `720x1280` | `1080x1920` |
+
+### 参数表 3
+
+| 场景 | 建议 |
+| ------- | -------------------------------------------------- |
+| 多主体或多产品 | 使用 `image_references`，最多 9 张，并在提示词里按“第一张图”“第二张图”指代 |
+| 固定开头画面 | 使用 `start_frames` 或 `images[0]` |
+| 提示词增强 | 想让模型自动补充画面细节用 `AUTO`；需要严格跟随原提示词用 `OFF` |
+| 首尾帧 | 本模型不支持 `end_frames`，不要用于首尾帧过渡任务 |
+
+## 请求与响应示例
+
+### 示例 1
+
+```text
+Authorization: Bearer $ROUTEMARKET_API_KEY
+```
+
+### 示例 2
+
+```json
+{
+  "id": "task_xxxxxxxxxxxxxxxx",
+  "status": "queued",
+  "phase": "queued",
+  "created_at": 1760000000,
+  "progress": null
+}
+```
+
+### 示例 3
+
+```bash
+curl https://api.routemarket.ai/v1/task/task_xxxxxxxxxxxxxxxx \
+  -H "Authorization: Bearer $ROUTEMARKET_API_KEY"
+```
+
+### 示例 4
+
+```json
+{
+  "id": "task_xxxxxxxxxxxxxxxx",
+  "status": "completed",
+  "phase": "completed",
+  "outputs": [
+    "https://api.routemarket.ai/videos/task_xxxxxxxxxxxxxxxx_0.mp4"
+  ],
+  "error": null
+}
+```
+
+## 接入说明
+
+- API 基础地址：`https://api.routemarket.ai`
+- 推荐密钥环境变量：`ROUTEMARKET_API_KEY`
+- 请求使用 `Authorization: Bearer <API_KEY>`。
+- 上线前请用实际账号验证端点、模型名、限额与异步任务状态。
+
+{/* migration-source-path: /docs/api/async-video/happy-horse-1-1 */}

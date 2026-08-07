@@ -1,0 +1,24 @@
+---
+title: Third-party client configuration
+description: Configure a desktop client that supports custom endpoints to use RouteMarket's image models.
+---
+
+{/* TODO: confirm RouteMarket's actual officially recommended image model name(s) */}
+
+Many desktop clients that support the OpenAI-compatible protocol (multi-model clients in the style of Cherry Studio, for example) allow a custom API endpoint, and can connect directly to RouteMarket's image generation models.
+
+<DocImage src="/images/docs/paint/client-setup.png" alt="Configuring RouteMarket image models in a third-party client" caption="Placeholder — replace with an actual screenshot of the client's configuration screen." />
+
+## Setup steps
+
+1. Open the client's "Model Services" or "Providers" settings page.
+2. Add a new custom provider, type "OpenAI-compatible".
+3. Set the API endpoint to `https://api.routemarket.ai/v1`.
+4. Set the API key to your [API token](/en/getting-started/token).
+5. Manually add the image model name to the "Models" list (e.g. `routemarket-image-default` — check the console's model list for the actual name).
+6. Save, switch to the image generation panel, and test with a prompt.
+
+## Troubleshooting
+
+- If the client reports "model not found", verify the model name matches what's shown in the console.
+- If generation fails, check that your token's group includes access to image models — see [Model Marketplace](/en/routing-and-models/model-marketplace).

@@ -1,0 +1,26 @@
+---
+title: OpenClaw
+description: Configure RouteMarket in OpenClaw-style multi-platform agent orchestration / gateway tools.
+---
+
+OpenClaw is a category of agent orchestration framework that bridges different model providers with multiple messaging platforms (such as chat bots), and typically also offers gateway / reverse-proxy level deployment capabilities.
+
+> The following is a general configuration structure reference. Exact UI text and field locations follow OpenClaw's own official documentation — this page is not officially verified by RouteMarket.
+
+## Configuration structure
+
+Configuration for this category of tool is typically layered:
+
+1. **Provider setup**: choose or add a provider configuration, using Custom or OpenAI Compatible as the type.
+2. **Model selection**: specify the model version to use under that provider.
+3. **Authentication**: enter your RouteMarket [API token](/en/getting-started/token), with `https://api.routemarket.ai/v1` as the endpoint URL.
+4. **Messaging platform integration** (optional): if you want to deploy the agent as a chat bot, configure the adapter for the target platform (e.g. Telegram).
+5. **Gateway / deployment settings** (optional): if you need browser-based remote access, this typically involves reverse proxy and SSL certificate configuration.
+
+<DocImage src="/images/docs/integrations/openclaw-setup.png" alt="OpenClaw configured with a RouteMarket endpoint" caption="Placeholder — replace with an actual screenshot of the tool's settings." />
+
+{/* TODO: confirm security recommendations for deploying OpenClaw as a publicly accessible gateway, and whether additional access-control settings are needed */}
+
+## Verify
+
+Once configured, start a conversation or task in OpenClaw and confirm you get a normal model response. If you hit an authentication error, check whether the key is correct or expired, or see the [FAQ](/en/faq).

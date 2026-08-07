@@ -1,0 +1,25 @@
+---
+title: AionUI
+description: Configure RouteMarket in AionUI-style multi-CLI GUI wrapper tools.
+---
+
+AionUI is a category of desktop GUI tool that can manage multiple terminal coding agents at once (such as Claude Code and Codex), providing a unified window interface and an optional WebUI remote-access entry point.
+
+> The following is a general configuration structure reference. Exact UI text and field locations follow AionUI's own official documentation — this page is not officially verified by RouteMarket.
+
+## Configuration structure
+
+Tools in this category typically require configuring each connected model/provider separately:
+
+1. **Provider type**: choose Custom or an equivalent option from the dropdown.
+2. **Authentication**: enter your RouteMarket [API token](/en/getting-started/token).
+3. **Endpoint URL**: enter `https://api.routemarket.ai/v1`.
+4. **Model selection**: pick from the dropdown or manually enter a model name returned by `/v1/models`.
+
+<DocImage src="/images/docs/integrations/aionui-setup.png" alt="AionUI configured with a RouteMarket endpoint" caption="Placeholder — replace with an actual screenshot of the tool's settings." />
+
+{/* TODO: confirm whether AionUI's multi-agent concurrent mode has any impact on token concurrency limits, and whether each CLI needs separate configuration */}
+
+## Verify
+
+Once configured, start a new task or conversation in AionUI and confirm you get a normal model response. If you hit an authentication error, check whether the key is correct or expired, or see the [FAQ](/en/faq).

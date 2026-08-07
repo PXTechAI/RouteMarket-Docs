@@ -1,0 +1,29 @@
+---
+title: Claude Desktop
+description: 把 Claude Desktop 客户端指向 RouteMarket 的网关地址。
+---
+
+{/* TODO: 确认 Claude Desktop 当前版本是否支持自定义 API 端点，以及具体入口位置 */}
+
+## 下载
+
+前往 [Claude 官网](https://claude.ai/download) 下载适合你操作系统的 Claude Desktop 客户端。
+
+## 配置自定义端点
+
+<DocImage src="/images/docs/clients/claude-desktop-setup.png" alt="Claude Desktop 自定义 API 端点配置" caption="占位图：待替换为实际配置界面截图。" />
+
+1. 打开 Claude Desktop，进入「设置」→「开发者」或「API」相关选项。
+2. 找到自定义 API 端点的输入框，填入 `https://api.routemarket.ai`。
+3. 输入你的 [·API 密钥](/zh/getting-started/token) 作为 API Key。
+4. 保存设置。
+
+## 网络与代理说明
+
+如果你所在网络环境需要走代理才能访问外部服务，请确认 Claude Desktop 使用的代理设置（通常复用系统代理）能正常访问 `api.routemarket.ai`。
+
+## 测试
+
+保存配置后，新建一次对话，发送一条简单消息，确认能正常收到回复。
+
+如果客户端不支持自定义端点，可改用命令行版本的 [Claude Code](/zh/cli/cli-claude-code)，或直接调用 [API](/zh/api)。

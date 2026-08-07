@@ -1,0 +1,34 @@
+---
+title: Cross-model-family relay
+description: Use one model family's CLI tool to call a different provider's model through RouteMarket's routing.
+---
+
+> **Advanced usage warning**: the pattern below relies on the fact that some CLI tools only care about protocol shape, not which model family actually answers — pointing a client designed for one model family at RouteMarket and having it call a different family's model. This is not an officially supported or recommended default usage pattern. It may behave unexpectedly, since a tool's prompt templates and tool-call formats are often tuned for its native model family, and it may break if the CLI tool changes in a future update. Use this only if you fully understand the risks.
+
+## How it works
+
+Some CLI tools are essentially just "protocol clients" — they assemble a request in a given protocol shape (e.g. the Anthropic Messages protocol) and send it to whatever `base_url` is configured, without caring which model family actually produced the response. That means, in principle, you can:
+
+1. Use a CLI tool built for family A's protocol (e.g. a client following the Anthropic protocol).
+2. Point its `base_url` at the RouteMarket gateway.
+3. Let RouteMarket's routing actually forward the request to a family B model, handling protocol translation along the way.
+
+```text
+Family-A protocol client → RouteMarket gateway (protocol translation + routing) → Family-B model
+```
+
+## Example scenario
+
+Suppose you're very comfortable with the workflow of a terminal tool that follows the Anthropic protocol, but want to use it to call a model from an OpenAI-protocol family this time:
+
+1. Set up the base configuration as described for [Claude Code](/en/cli/cli-claude-code).
+2. In the RouteMarket console, set the logical model name for that token's requests to the routing name corresponding to the target family-B model (check the console's model list for the exact name).
+3. Use the CLI tool as normal — requests will actually be routed to the target model.
+
+## Known limitations
+
+- The tool's built-in system prompts and tool-call (function calling) formats may be tuned for its native model family, so behavior can change once you switch the target model.
+- Some advanced parameters specific to one family may not be forwarded correctly.
+- This pattern depends on the RouteMarket routing layer's protocol-compatibility support — check the console's actual routing configuration for current coverage.
+
+{/* TODO: document the routing layer's actual supported protocol-translation scope and verified tool combinations */}

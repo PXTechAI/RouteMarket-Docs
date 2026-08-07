@@ -1,0 +1,12 @@
+{
+  "title": "CLI 配置",
+  "defaultOpen": true,
+  "pages": [
+    "index",
+    "cli-claude-code",
+    "cli-codex",
+    "cli-grok",
+    "cli-kimi",
+    "cli-cache-proxy"
+  ]
+}

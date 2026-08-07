@@ -1,0 +1,27 @@
+---
+title: 4. Add routing control when you need it
+description: Use fields like provider and route to control RouteMarket's routing behavior.
+---
+
+The default request can stay simple.
+
+When you need more control, RouteMarket also supports fields like:
+
+- `provider`
+- `route`
+- `routing_preference`
+- `source_policy`
+
+Example:
+
+```json
+{
+  "model": "gpt-5.4",
+  "messages": [
+    { "role": "user", "content": "hello" }
+  ],
+  "routing_preference": "highest_reliability"
+}
+```
+
+Next, learn [what `model` means](/en/quickstart/understand-model).

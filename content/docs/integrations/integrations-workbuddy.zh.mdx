@@ -1,0 +1,25 @@
+---
+title: WorkBuddy
+description: 在 WorkBuddy 这类办公协作平台中配置 RouteMarket。
+---
+
+WorkBuddy 是一类集成了 AI 能力的办公协作平台，通常用于文档撰写、数据分析、演示文稿制作等场景，支持接入第三方模型服务。
+
+> 以下为通用配置结构参考，具体界面文案和字段位置请以 WorkBuddy 官方文档为准；本页未经 RouteMarket 官方验证。
+
+## 配置结构
+
+这类工具通常需要配置：
+
+1. **接口地址**：填入 `https://api.routemarket.ai/v1`。
+2. **认证信息**：填入 RouteMarket 的 [API 密钥](/zh/getting-started/token)。
+3. **模型标识**：填写你的密钥分组下实际可用的模型 ID，参考 [模型广场](/zh/routing-and-models/model-marketplace)。
+4. **能力开关**（可选）：部分工具允许单独开启或关闭工具调用、推理模式等能力，需要与实际模型支持的能力匹配，避免开启模型不支持的功能。
+
+<DocImage src="/images/docs/integrations/workbuddy-setup.png" alt="WorkBuddy 配置 RouteMarket 端点示意" caption="占位图：待替换为实际工具设置界面截图。" />
+
+{/* TODO: 确认 WorkBuddy 具体支持哪些密钥分组，以及能力开关与 RouteMarket 模型能力标志位的对应关系 */}
+
+## 验证
+
+配置完成后，在 WorkBuddy 中发起一次任务，确认能正常收到模型响应。如遇到鉴权失败或提示模型不支持，检查密钥所在分组是否包含该模型的访问权限，或参考 [常见问题](/zh/faq)。

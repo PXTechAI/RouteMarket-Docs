@@ -1,23 +1,23 @@
 ---
-title: Code Examples
-description: Copy-paste examples for curl, JavaScript, and Python-style OpenAI clients.
+title: 代码示例
+description: 可直接复制使用的 curl、JavaScript 和 Python 风格 OpenAI 客户端示例。
 ---
 
-This page collects the shortest useful request examples.
+本页收集了最简短实用的请求示例。
 
-## curl: list models
+## curl：列出模型
 
 ```bash
 curl https://api.routemarket.ai/v1/models \
-  -H "Authorization: Bearer $ROUTELAB_API_KEY"
+  -H "Authorization: Bearer $ROUTEMARKET_API_KEY"
 ```
 
-## curl: basic chat completion
+## curl：基础对话补全
 
 ```bash
 curl https://api.routemarket.ai/v1/chat/completions \
   -H "Content-Type: application/json" \
-  -H "Authorization: Bearer $ROUTELAB_API_KEY" \
+  -H "Authorization: Bearer $ROUTEMARKET_API_KEY" \
   -d '{
     "model": "gpt-5.4",
     "messages": [
@@ -26,12 +26,12 @@ curl https://api.routemarket.ai/v1/chat/completions \
   }'
 ```
 
-## curl: route with a preference
+## curl：带路由偏好的请求
 
 ```bash
 curl https://api.routemarket.ai/v1/chat/completions \
   -H "Content-Type: application/json" \
-  -H "Authorization: Bearer $ROUTELAB_API_KEY" \
+  -H "Authorization: Bearer $ROUTEMARKET_API_KEY" \
   -d '{
     "model": "gpt-5.4",
     "messages": [
@@ -47,7 +47,7 @@ curl https://api.routemarket.ai/v1/chat/completions \
 import OpenAI from "openai";
 
 const client = new OpenAI({
-  apiKey: process.env.ROUTELAB_API_KEY,
+  apiKey: process.env.ROUTEMARKET_API_KEY,
   baseURL: "https://api.routemarket.ai/v1"
 });
 
@@ -62,14 +62,14 @@ const result = await client.chat.completions.create({
 console.log(result.choices[0]?.message?.content);
 ```
 
-## Python-style OpenAI client
+## Python 风格 OpenAI 客户端
 
 ```python
 from openai import OpenAI
 import os
 
 client = OpenAI(
-    api_key=os.environ["ROUTELAB_API_KEY"],
+    api_key=os.environ["ROUTEMARKET_API_KEY"],
     base_url="https://api.routemarket.ai/v1",
 )
 
@@ -83,7 +83,7 @@ result = client.chat.completions.create(
 print(result.choices[0].message.content)
 ```
 
-## JavaScript: pin a provider
+## JavaScript：指定固定服务商
 
 ```ts
 const result = await client.chat.completions.create({
@@ -93,7 +93,7 @@ const result = await client.chat.completions.create({
 });
 ```
 
-## JavaScript: use a routing preference
+## JavaScript：使用路由偏好
 
 ```ts
 const result = await client.chat.completions.create({
@@ -103,9 +103,9 @@ const result = await client.chat.completions.create({
 });
 ```
 
-## Where to go next
+## 接下来可以看看
 
-- [Authentication](./authentication)
-- [Models](./models)
-- [Chat Completions](./chat-completions)
-- [Routing Preferences](./routing-preferences)
+- [身份验证](/zh/authentication)
+- [路由与模型](/zh/routing-and-models)
+- [对话补全](/zh/api/text/chat-completions)
+- [路由偏好](/zh/routing-preferences)

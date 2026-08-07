@@ -1,0 +1,35 @@
+---
+title: Claude Code
+description: Connect Claude Code to RouteMarket via environment variables.
+---
+
+Claude Code reads its API configuration from environment variables. The simplest approach is to set the `env` field in its config file.
+
+## Config file location
+
+| OS | Path |
+| --- | --- |
+| macOS / Linux | `~/.claude/settings.json` |
+| Windows | `%USERPROFILE%\.claude\settings.json` |
+
+## Example config
+
+```json title="settings.json"
+{
+  "env": {
+    "ANTHROPIC_BASE_URL": "https://api.routemarket.ai",
+    "ANTHROPIC_AUTH_TOKEN": "your-routemarket-api-token"
+  }
+}
+```
+
+Replace `your-routemarket-api-token` with the token you generated in [Create an API token](/en/getting-started/token).
+
+## Test
+
+```bash
+claude --version
+claude "introduce yourself in one sentence"
+```
+
+A normal model reply confirms the config is working. If the connection fails, see the [Claude Code FAQ](/en/faq2/faq-cc).

@@ -1,0 +1,33 @@
+---
+title: Optional caching proxy
+description: Use a local caching proxy to improve cache hit rates and reduce CLI tool costs.
+---
+
+{/* TODO: add RouteMarket's official caching proxy tool name, repository, and install instructions, if one exists */}
+
+Some CLI tools — especially coding agents — resend large amounts of identical context (system prompts, message history, etc.) across multiple turns of a conversation. If those requests don't hit the upstream prompt cache, every turn gets billed for the full context length again, which can meaningfully increase cost.
+
+## How it works
+
+A local caching proxy sits between your machine and the RouteMarket gateway. It:
+
+- forwards structurally identical requests consistently, to improve upstream cache hit rates
+- deduplicates or reuses recent identical requests locally
+- doesn't change the model's actual output — only how requests are organized
+
+```text
+CLI tool → local caching proxy (127.0.0.1:port) → https://api.routemarket.ai
+```
+
+## Do you need it?
+
+- If your usage is mostly short, single-shot requests, you generally don't need a caching proxy.
+- If you're running long, multi-turn, large-context sessions with a coding agent, a caching proxy can produce a noticeable cost reduction.
+
+## Configuration
+
+1. Install and start the local caching proxy (exact commands to be added once the official tool is released).
+2. Point the CLI tool's `base_url` / `ANTHROPIC_BASE_URL` at the proxy's local listening address instead of `https://api.routemarket.ai` directly.
+3. The proxy forwards the actual requests to the RouteMarket gateway.
+
+> This is an optional optimization and doesn't affect basic functionality. If you're unsure whether you need it, skip it for now and enable it later if needed.

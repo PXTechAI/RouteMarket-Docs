@@ -1,0 +1,26 @@
+---
+title: Hermes
+description: Configure RouteMarket in Hermes-style terminal AI agent tools.
+---
+
+Hermes is a category of terminal-first AI agent tool that, beyond local interactive use, typically also supports running as a persistent service and connecting to messaging platform bots.
+
+> The following is a general configuration structure reference. Exact UI text and field locations follow Hermes's own official documentation — this page is not officially verified by RouteMarket.
+
+## Configuration structure
+
+Tools in this category typically require configuring:
+
+1. **Provider / endpoint URL**: choose Custom or a compatible provider type, with `https://api.routemarket.ai/v1` as the endpoint.
+2. **Authentication**: enter your RouteMarket [API token](/en/getting-started/token).
+3. **Model selection**: specify the model identifier and display name to use.
+4. **Protocol format**: choose the matching protocol based on the model you're calling (e.g. Anthropic Messages format).
+5. **Messaging platform integration** (optional): if deploying as a chat bot, configure the connection settings for the target platform.
+
+<DocImage src="/images/docs/integrations/hermes-setup.png" alt="Hermes configured with a RouteMarket endpoint" caption="Placeholder — replace with an actual screenshot of the tool's settings." />
+
+{/* TODO: confirm Hermes's exact config file path and field names, and whether an interactive setup wizard is supported */}
+
+## Verify
+
+Once configured, start a conversation in Hermes and confirm you get a normal model response. If you hit an authentication error, check whether the key is correct or expired, or see the [FAQ](/en/faq).

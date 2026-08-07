@@ -1,0 +1,17 @@
+{
+  "title": "RouteMarket Docs",
+  "pages": [
+    "index",
+    "getting-started",
+    "quickstart",
+    "authentication",
+    "code-examples",
+    "routing-and-models",
+    "faq",
+    "cli",
+    "paint",
+    "clients",
+    "integrations",
+    "api"
+  ]
+}

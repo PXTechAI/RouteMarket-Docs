@@ -1,0 +1,229 @@
+---
+title: "异步视频任务"
+description: "通过统一任务接口提交视频生成任务，并通过轮询或回调获取视频 URL"
+---
+
+本页整理 RouteMarket 的 **异步视频任务** 兼容接口，包括可识别的端点、结构化参数和请求示例。
+
+> 兼容性提示：页面由公开协议中的技术字段生成。具体模型、额度和路由能力以 RouteMarket 控制台及实际网关响应为准。
+
+## 接口地址
+
+- `POST https://api.routemarket.ai/v1/task/submit`
+
+## 参数参考
+
+### 参数表 1
+
+| 能力 | 方法 | 路径 | 说明 |
+| -------- | ------ | ---------------------- | ---------- |
+| 提交任务 | `POST` | `/v1/task/submit` | - |
+| 查询任务 | `GET` | `/v1/task/{task_id}` | - |
+| 提交任务兼容路径 | `POST` | `/v1/videos` | - |
+| 查询任务兼容路径 | `GET` | `/v1/videos/{task_id}` | - |
+
+### 参数表 2
+
+| 模型 | 适合场景 |
+| -------------------------------------------------------------- | --------------------------------- |
+| [`seedance-2.0-fast`](/zh/api/async-video/api-async-video-seedance-2-0-fast) | Seedance 快速版，能力与 Mini 类似，适合常规视频任务 |
+| [`seedance-2.0`](/zh/api/async-video/api-async-video-seedance-2-0) | Seedance 标准版，支持更高分辨率，适合质量优先任务 |
+| [`grok-imagine-1.5`](/zh/api/async-video/api-async-video-grok-imagine-1-5) | 必须提供首帧的图生视频，适合让一张图动起来 |
+| [`happy-horse-1.1`](/zh/api/async-video/api-async-video-happy-horse-1-1) | 支持最多 9 张参考图，适合多图参考场景 |
+| [`gemini-omni-flash`](/zh/api/async-video/api-async-video-gemini-omni-flash) | 可纯文生视频，也支持最多 5 张参考图，支持 720p 横竖屏 |
+
+### 参数表 3
+
+| 字段 | 类型 | 必填 | 说明 |
+| -------------- | ------- | --- | ------------------------------------- |
+| `prompt` | string | 是 | 相关值：`5000` |
+| `duration` | integer | 视模型 | - |
+| `aspect_ratio` | string | 视模型 | 相关值：`16:9`、`9:16`、`16`、`9` |
+| `resolution` | string | 视模型 | 相关值：`480p`、`720p`、`1080p` |
+| `audio` | boolean | 否 | 相关值：`true` |
+| `n` | integer | 否 | 相关值：`1` |
+
+### 参数表 4
+
+| 形式 | 说明 |
+| -------- | ------------------------------- |
+| URL | 相关值：`http`、`https` |
+| data URI | 相关值：`data:image/png;base64,...` |
+| base64 | - |
+
+### 参数表 5
+
+| 字段 | 说明 |
+| ------------ | -------------------- |
+| `id` | - |
+| `status` | 相关值：`queued` |
+| `phase` | 相关值：`queued` |
+| `created_at` | - |
+| `progress` | - |
+
+### 参数表 6
+
+| status | 说明 |
+| ------------- | ------------------------- |
+| `queued` | - |
+| `in_progress` | - |
+| `completed` | 相关值：`outputs` |
+| `failed` | 相关值：`error` |
+
+### 参数表 7
+
+| phase | 说明 |
+| -------------------------- | --------------------- |
+| `queued` | - |
+| `materializing_references` | - |
+| `uploading_references` | - |
+| `submitting_generation` | - |
+| `generating` | - |
+| `completed` | - |
+| `failed` | - |
+
+### 参数表 8
+
+| 建议 | 说明 |
+| -------- | -------------------- |
+| 快速返回 2xx | - |
+| 幂等处理 | - |
+| 校验任务 ID | 相关值：`id` |
+| 转存结果 URL | 相关值：`outputs` |
+
+## 请求与响应示例
+
+### 示例 1
+
+```text
+Authorization: Bearer $ROUTEMARKET_API_KEY
+```
+
+### 示例 2
+
+```text
+https://api.routemarket.ai
+```
+
+### 示例 3
+
+```http
+POST /v1/task/submit
+Authorization: Bearer $ROUTEMARKET_API_KEY
+Content-Type: application/json
+```
+
+### 示例 4
+
+```json
+"https://example.com/image.jpg"
+```
+
+### 示例 5
+
+```json
+{
+  "url": "https://example.com/image.jpg",
+  "strength": "MID"
+}
+```
+
+### 示例 6
+
+```json
+{
+  "id": "task_xxxxxxxxxxxxxxxx",
+  "status": "queued",
+  "phase": "queued",
+  "created_at": 1760000000,
+  "progress": null
+}
+```
+
+### 示例 7
+
+```bash
+curl https://api.routemarket.ai/v1/task/task_xxxxxxxxxxxxxxxx \
+  -H "Authorization: Bearer $ROUTEMARKET_API_KEY"
+```
+
+### 示例 8
+
+```json
+{
+  "id": "task_xxxxxxxxxxxxxxxx",
+  "status": "completed",
+  "phase": "completed",
+  "created_at": 1760000000,
+  "completed_at": 1760000100,
+  "outputs": [
+    "https://api.routemarket.ai/videos/task_xxxxxxxxxxxxxxxx_0.mp4"
+  ],
+  "error": null,
+  "progress": {
+    "phase": "completed",
+    "stage": "completed"
+  }
+}
+```
+
+### 示例 9
+
+```python
+import time
+import requests
+
+API_BASE = "https://api.routemarket.ai"
+API_KEY = "sk-xxx"
+
+headers = {
+    "Authorization": f"Bearer {API_KEY}",
+    "Content-Type": "application/json",
+}
+
+task = requests.post(
+    f"{API_BASE}/v1/task/submit",
+    headers=headers,
+    json={
+        "model": "seedance-2.0-fast",
+        "input": {
+            "prompt": "一段明亮的产品展示视频，镜头平稳推进，真实商业摄影风格",
+            "aspect_ratio": "16:9",
+            "resolution": "720p",
+            "duration": 6,
+            "audio": True,
+        },
+    },
+    timeout=60,
+).json()
+
+task_id = task["id"]
+
+while True:
+    result = requests.get(
+        f"{API_BASE}/v1/task/{task_id}",
+        headers={"Authorization": f"Bearer {API_KEY}"},
+        timeout=60,
+    ).json()
+
+    status = result["status"]
+
+    if status == "completed":
+        for url in result.get("outputs", []):
+            print(url)
+        break
+
+    if status == "failed":
+        raise RuntimeError(result.get("error", "任务失败"))
+
+    time.sleep(4)
+```
+
+## 接入说明
+
+- API 基础地址：`https://api.routemarket.ai`
+- 推荐密钥环境变量：`ROUTEMARKET_API_KEY`
+- 请求使用 `Authorization: Bearer <API_KEY>`。
+- 上线前请用实际账号验证端点、模型名、限额与异步任务状态。
+
+{/* migration-source-path: /docs/api/async-video */}

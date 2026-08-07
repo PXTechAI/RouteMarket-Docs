@@ -1,0 +1,32 @@
+---
+title: 聊天类客户端与办公工具
+description: 把面向对话场景的第三方聊天客户端或办公协作工具接入到 RouteMarket。
+---
+
+除了终端 Agent 封装工具和 IDE 插件外，还有一类工具面向的是纯对话场景——例如独立的桌面/移动端聊天客户端，或是集成了 AI 对话能力的办公协作软件。这类工具通常在设置里提供"自定义模型服务商"或"添加 API Provider"的入口。
+
+> 常见的此类工具包括 [OpenClaw](/zh/integrations/integrations-openclaw)、[WorkBuddy](/zh/integrations/integrations-workbuddy) 等——以下仅作为该类工具的社区常见示例列出，并非 RouteMarket 官方验证或支持的工具列表，具体能否接入请以实际测试为准。
+
+## 配置步骤
+
+大多数此类工具的配置字段和聊天客户端类似：
+
+1. 在工具设置中找到"模型服务商""API Provider"或"自定义端点"相关入口。
+2. 类型选择 OpenAI Compatible、Custom OpenAI 或等价选项。
+3. Base URL 填写 `https://api.routemarket.ai/v1`。
+4. API Key 填写 RouteMarket 项目密钥。
+5. 模型名填写 `/v1/models` 返回的可用模型。
+6. 保存后发送一条测试消息，确认能正常收到回复。
+
+<DocImage src="/images/docs/integrations/chat-client-setup.png" alt="聊天类客户端配置 RouteMarket 端点示意" caption="占位图：待替换为实际工具设置界面截图。" />
+
+## 常见配置错误
+
+- Base URL 漏掉 `/v1`，或工具自动重复追加 `/v1`。
+- 模型名来自工具预设列表，但账户并没有对应模型的访问权限。
+- 密钥前后带有空格、引号或换行。
+- 工具运行在受限网络环境（如企业内网代理）中，导致无法访问网关地址。
+
+## 验证
+
+先确认 API 密钥可以调用 `/v1/models`，再在工具中填写配置并发送测试消息；如遇到鉴权失败，检查密钥是否正确、是否已过期，或参考 [常见问题](/zh/faq)。

@@ -1,0 +1,41 @@
+---
+title: Codex
+description: Connect Codex to RouteMarket via its TOML config file.
+---
+
+Codex uses a TOML config file, and defines a custom provider through `model_provider`.
+
+## Config file location
+
+| OS | Path |
+| --- | --- |
+| macOS / Linux | `~/.codex/config.toml` |
+| Windows | `%USERPROFILE%\.codex\config.toml` |
+
+## Example config
+
+```toml title="config.toml"
+model_provider = "routemarket"
+
+[model_providers.routemarket]
+name = "RouteMarket"
+base_url = "https://api.routemarket.ai/v1"
+env_key = "ROUTEMARKET_API_KEY"
+```
+
+Also set the corresponding environment variable:
+
+```bash
+export ROUTEMARKET_API_KEY="your-routemarket-api-token"
+```
+
+Replace `your-routemarket-api-token` with the token you generated in [Create an API token](/en/getting-started/token).
+
+## Test
+
+```bash
+codex --version
+codex "introduce yourself in one sentence"
+```
+
+A normal model reply confirms the config is working. If the connection fails, see the [Codex FAQ](/en/faq2/faq-codex).

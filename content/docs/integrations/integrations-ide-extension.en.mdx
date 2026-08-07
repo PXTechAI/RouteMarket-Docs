@@ -1,0 +1,32 @@
+---
+title: IDE / editor extension
+description: Configure a RouteMarket endpoint inside an AI extension for VS Code or similar editors.
+---
+
+Many IDE / editor extensions (AI coding assistant extensions for VS Code, for example) let you configure a custom API provider in their settings, which can point directly at RouteMarket.
+
+> A common example of this category is the [OpenCode](/en/integrations/integrations-opencode) editor extension — listed here only as a community-known example, not as an officially verified or supported list from RouteMarket. Actual compatibility should be confirmed through testing.
+
+## Setup steps (VS Code-style extension example)
+
+1. Install the extension and find the "API Provider" or "custom endpoint" setting.
+2. Choose "OpenAI-compatible" or "Custom / Self-hosted" as the provider type.
+3. Set the base URL to `https://api.routemarket.ai/v1`.
+4. Set the API key to your [API token](/en/getting-started/token).
+5. Enter or select the model name in the model dropdown.
+
+<DocImage src="/images/docs/integrations/ide-extension-setup.png" alt="Configuring a RouteMarket endpoint in an IDE extension" caption="Placeholder — replace with an actual screenshot of the extension's settings." />
+
+## Common field mapping
+
+| Typical extension field | RouteMarket value |
+| --- | --- |
+| API Base URL / Endpoint | `https://api.routemarket.ai/v1` |
+| API Key | Your [API token](/en/getting-started/token) |
+| Model | A model name available under that token's group in the console |
+
+## Verify
+
+Open the extension's chat panel in the editor and send a simple prompt (e.g. "explain this function"), confirming you get a response with no 401 / 403 auth errors.
+
+If authentication fails, check that the token is correct and not expired, or see the [FAQ](/en/faq2/faq-cc).

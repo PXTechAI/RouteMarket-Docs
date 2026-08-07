@@ -1,69 +1,69 @@
 ---
-title: Authentication
-description: How to authenticate requests to the RouteMarket API.
+title: 身份验证
+description: 如何对 RouteMarket API 请求进行身份验证。
 ---
 
-RouteMarket uses **API keys** for public gateway requests.
+RouteMarket 对公开网关请求使用 **API 密钥**进行验证。
 
-## Base URL
+## 基础地址
 
-Use the production gateway URL:
+使用生产环境网关地址：
 
 ```text
 https://api.routemarket.ai
 ```
 
-If you are using an OpenAI-compatible SDK, the base URL is typically:
+如果你使用的是兼容 OpenAI 的 SDK，基础地址通常为：
 
 ```text
 https://api.routemarket.ai/v1
 ```
 
-## Authorization header
+## Authorization 请求头
 
-Send your key in the `Authorization` header:
+在 `Authorization` 请求头中携带你的密钥：
 
 ```http
 Authorization: Bearer <your_api_key>
 ```
 
-## curl example
+## curl 示例
 
 ```bash
 curl https://api.routemarket.ai/v1/models \
-  -H "Authorization: Bearer $ROUTELAB_API_KEY"
+  -H "Authorization: Bearer $ROUTEMARKET_API_KEY"
 ```
 
-## OpenAI SDK example
+## OpenAI SDK 示例
 
 ```ts
 import OpenAI from "openai";
 
 const client = new OpenAI({
-  apiKey: process.env.ROUTELAB_API_KEY,
+  apiKey: process.env.ROUTEMARKET_API_KEY,
   baseURL: "https://api.routemarket.ai/v1"
 });
 ```
 
-## What the key controls
+## 密钥能控制什么
 
-A RouteMarket API key is not only a credential. It can also affect runtime behavior through project and key-level policy, including:
+RouteMarket API 密钥不仅仅是一个凭证，它还可以通过项目级和密钥级策略影响运行时行为，包括：
 
-- model access
-- route visibility
-- routing preference
-- usage limits
-- budget or rate constraints
+- 模型访问权限
+- 路由可见性
+- 路由偏好
+- 用量限制
+- 预算或速率约束
 
-That means two keys may not see the same model list or route behavior.
+这意味着两个不同的密钥看到的模型列表或路由行为可能并不相同。
 
-## Common auth failures
+## 常见身份验证失败
 
-Typical authentication-related failures include:
+常见的身份验证相关失败包括：
 
 - `PROJECT_KEY_INVALID`
 - `PROJECT_KEY_DISABLED`
 - `PROJECT_LIMIT_EXCEEDED`
 - `INSUFFICIENT_BALANCE`
 
-See [Errors](./errors) for the first-pass error guide.
+详见 [报错与排查](/zh/guide/troubleshooting) 中的初步排查指南。

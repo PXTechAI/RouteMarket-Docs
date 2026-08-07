@@ -1,0 +1,158 @@
+---
+title: "Sora 视频生成"
+description: "OpenAI Sora 兼容视频任务接口"
+---
+
+本页整理 RouteMarket 的 **Sora 视频生成** 兼容接口，包括可识别的端点、结构化参数和请求示例。
+
+> 兼容性提示：页面由公开协议中的技术字段生成。具体模型、额度和路由能力以 RouteMarket 控制台及实际网关响应为准。
+
+## 接口地址
+
+- `DELETE https://api.routemarket.ai/v1/videos/task_xxx`
+
+## 参数参考
+
+### 参数表 1
+
+| 能力 | 方法 | 路径 | 说明 |
+| ---- | -------- | ------------------------------- | --------- |
+| 创建任务 | `POST` | `/v1/videos` | - |
+| 查询任务 | `GET` | `/v1/videos/{video_id}` | - |
+| 下载文件 | `GET` | `/v1/videos/{video_id}/content` | - |
+| 删除任务 | `DELETE` | `/v1/videos/{video_id}` | - |
+
+### 参数表 2
+
+| 模型 | 说明 |
+| -------- | ------------------ |
+| `sora-2` | - |
+
+### 参数表 3
+
+| status | 说明 |
+| ------------- | ----------------------- |
+| `queued` | - |
+| `in_progress` | - |
+| `completed` | - |
+| `failed` | 相关值：`error.message` |
+
+### 参数表 4
+
+| 问题 | 处理方式 |
+| ------ | ---------------------------- |
+| 查询不到任务 | 检查 `video_id` 是否为创建响应里的 `id` |
+| 一直生成中 | 视频任务耗时较长，建议每 2 到 3 秒轮询一次 |
+| 下载失败 | 优先使用 `output` 直链，或稍后重试下载接口 |
+
+## 请求与响应示例
+
+### 示例 1
+
+```text
+Authorization: Bearer $ROUTEMARKET_API_KEY
+```
+
+### 示例 2
+
+```json
+{
+  "id": "task_xxx",
+  "object": "video",
+  "model": "sora-2",
+  "status": "queued",
+  "size": "1280x720",
+  "seconds": "8",
+  "progress": 0,
+  "created_at": 1760000000
+}
+```
+
+### 示例 3
+
+```bash
+curl https://api.routemarket.ai/v1/videos/task_xxx \
+  -H "Authorization: Bearer $ROUTEMARKET_API_KEY"
+```
+
+### 示例 4
+
+```json
+{
+  "id": "task_xxx",
+  "object": "video",
+  "model": "sora-2",
+  "status": "completed",
+  "progress": 100,
+  "output": "https://api.routemarket.ai/videos/task_xxx.mp4",
+  "created_at": 1760000000,
+  "completed_at": 1760000090
+}
+```
+
+### 示例 5
+
+```bash
+curl https://api.routemarket.ai/v1/videos/task_xxx/content \
+  -H "Authorization: Bearer $ROUTEMARKET_API_KEY" \
+  --output output.mp4
+```
+
+### 示例 6
+
+```bash
+curl -X DELETE https://api.routemarket.ai/v1/videos/task_xxx \
+  -H "Authorization: Bearer $ROUTEMARKET_API_KEY"
+```
+
+### 示例 7
+
+```python
+import time
+import requests
+
+API_BASE = "https://api.routemarket.ai"
+API_KEY = "sk-xxx"
+
+task = requests.post(
+    f"{API_BASE}/v1/videos",
+    headers={
+        "Authorization": f"Bearer {API_KEY}",
+        "Content-Type": "application/json",
+    },
+    json={
+        "model": "sora-2",
+        "prompt": "镜头缓慢推进，一只未来感狐狸站在雨夜霓虹街头",
+        "size": "1280x720",
+        "seconds": "8",
+    },
+    timeout=60,
+).json()
+
+task_id = task["id"]
+
+while True:
+    result = requests.get(
+        f"{API_BASE}/v1/videos/{task_id}",
+        headers={"Authorization": f"Bearer {API_KEY}"},
+        timeout=60,
+    ).json()
+
+    if result["status"] == "completed":
+        print(result["output"])
+        break
+
+    if result["status"] == "failed":
+        raise RuntimeError(result.get("error", {}).get("message", "生成失败"))
+
+    time.sleep(3)
+```
+
+## 接入说明
+
+- API 基础地址：`https://api.routemarket.ai`
+- 推荐密钥环境变量：`ROUTEMARKET_API_KEY`
+- 请求使用 `Authorization: Bearer <API_KEY>`。
+- 上线前请用实际账号验证端点、模型名、限额与异步任务状态。
+
+{/* migration-source-path: /docs/api/videos */}

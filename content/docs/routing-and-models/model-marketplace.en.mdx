@@ -1,0 +1,46 @@
+---
+title: Model Marketplace
+description: Understand RouteMarket's key group mechanism, billing multipliers, and which models each group supports.
+---
+
+RouteMarket uses "groups" to control which models an API key can access and the billing multiplier applied to those models. The group you choose when creating a key determines the available model range and price for all subsequent requests.
+
+> If you haven't created a key yet, complete [Create an API token](/en/getting-started/token) first.
+
+## What is a billing multiplier
+
+Every API key is bound to a group when it's created. The group determines **which models** that key can access, and the **billing multiplier** applied to its calls. The billing multiplier is a factor applied on top of the model's base price:
+
+- **Multiplier = 1**: default multiplier, standard pricing
+- **Multiplier < 1**: discounted group, e.g. 0.8 means 20% off
+- **Multiplier > 1**: premium group, usually corresponding to a more stable official direct-connect source, at a higher price
+
+<DocImage src="/images/docs/routing-and-models/group-multiplier.png" alt="Console group multiplier illustration" caption="Placeholder — replace with an actual screenshot of the console's group page." />
+
+## Viewing your available groups in the console
+
+1. Log in to the [console](https://console.routemarket.ai).
+2. Go to "Token Management" or "Groups."
+3. Check the multiplier value shown next to each group name.
+
+When creating a key, select the target group in the "Token Group" field.
+
+## Group list
+
+The table below lists a few example groups. The actual groups available follow what's shown in the console's "Groups" page.
+
+| Group name | Description | CLI support | Third-party integration allowed |
+| --- | --- | --- | --- |
+| `default` | Default catch-all group covering most common models, 1× multiplier | Supported | Allowed |
+| `premium` | Official direct-connect sources, higher stability, multiplier usually > 1× | Supported | Allowed |
+| `budget` | Discounted group, multiplier < 1×, suited for non-critical or batch workloads | Supported | Allowed |
+| `image` | Dedicated group for image generation models | Partial support | Depends on the model |
+
+{/* TODO: add RouteMarket's actual complete group list */}
+
+### Field descriptions
+
+- **CLI support**: whether models in this group can be accessed directly via [CLI configuration](/en/cli).
+- **Third-party integration allowed**: whether keys in this group can be used in [third-party integration](/en/integrations) scenarios.
+
+> The specific models, multipliers, and limits for each group may change at any time — the console's live display is authoritative.

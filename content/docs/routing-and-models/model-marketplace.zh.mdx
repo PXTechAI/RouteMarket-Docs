@@ -1,0 +1,27 @@
+---
+title: 模型广场
+description: 了解 RouteMarket 的密钥计费折扣，以及支持的模型范围。
+---
+
+RouteMarket 通过「分组」来控制一个 API 密钥可以访问哪些模型，以及这些模型的计费倍率。创建密钥时选择的分组，决定了后续所有请求的可用模型范围和价格。
+
+> 如果你还没有创建密钥，先完成[创建 API 密钥](/zh/getting-started/token)这一步。
+
+## 什么是计费倍率
+
+每个 API 密钥在创建时都会绑定一个分组，分组决定了这个密钥**能访问哪些模型**：
+
+
+<DocImage src="/images/docs/routing-and-models/models.png" alt="控制台分组倍率示意" caption="模型分组" />
+
+## 在控制台查看你的可用模型
+
+1. 登录 [API密钥](https://console.routemarket.ai/workspace/keys)。
+2. 进入「新建KEY」或「管理」页面。
+
+### 字段说明
+
+- **CLI 支持**：该分组下的模型是否可以直接通过 [CLI 配置](/zh/cli) 接入使用。
+- **允许第三方集成**：该分组的密钥是否允许在 [第三方集成](/zh/integrations) 场景中使用。
+
+> 分组的具体可用模型、倍率和限制可能随时调整，请以控制台实时展示为准。

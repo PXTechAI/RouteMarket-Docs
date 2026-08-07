@@ -1,0 +1,22 @@
+---
+title: 3. Use an OpenAI-compatible SDK
+description: Connect to the RouteMarket gateway with the OpenAI SDK.
+---
+
+```ts
+import OpenAI from "openai";
+
+const client = new OpenAI({
+  apiKey: process.env.ROUTEMARKET_API_KEY,
+  baseURL: "https://api.routemarket.ai/v1"
+});
+
+const completion = await client.chat.completions.create({
+  model: "gpt-5.4",
+  messages: [{ role: "user", content: "Explain RouteMarket in one sentence." }]
+});
+
+console.log(completion.choices[0]?.message?.content);
+```
+
+Need finer control? Continue to [Add routing control](/en/quickstart/routing-control).

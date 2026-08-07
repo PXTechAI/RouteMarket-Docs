@@ -1,0 +1,150 @@
+---
+title: 路由与模型
+description: 理解 RouteMarket 如何从逻辑模型请求走到最终的可用 route，以及如何查询可用模型。
+---
+
+RouteMarket 的核心价值不是只做代理转发，而是把"**统一模型名 -> 多来源候选 -> 运行时选路**"这条链路做成平台能力。在 RouteMarket 中，你通常请求的是一个**逻辑模型名**，而不是原始的上游服务商模型标识符——逻辑模型、Provider、Asset、Pool、Route 之间的完整关系见 [核心概念](/zh/core-concepts)。
+
+## 查询可用模型
+
+使用 `GET /v1/models` 列出你的 API 密钥可以使用的模型。
+
+```bash
+curl https://api.routemarket.ai/v1/models \
+  -H "Authorization: Bearer $ROUTEMARKET_API_KEY"
+```
+
+RouteMarket 的模型列表被设计为暴露的信息不只是名称。根据当前的实现和策略，一个模型条目可能包含如下字段：
+
+- 逻辑模型代码
+- 显示名称
+- `from_price`
+- `source_count`
+- 能力标志位
+- 是否支持手动选择来源
+
+想按分组浏览可用模型和计费倍率，见 [模型广场](/zh/routing-and-models/model-marketplace)。
+
+## 一个请求进入后会发生什么
+
+当网关收到一次请求时，系统至少会拿这些输入做决策：
+
+- API Key
+- 项目与接入作用域策略
+- 用户请求的逻辑模型
+- 是否显式指定 `provider` 或 `route`
+- 路由偏好，例如 `lowest_price` 或 `highest_reliability`
+- 当前候选 route 的健康状态、价格与能力
+
+## 路由流程的简化版本
+
+可以把 RouteMarket 的路由过程理解成 8 步：
+
+1. 校验 Key 是否有效
+2. 加载项目与 Key 的有效策略
+3. 找出该逻辑模型的候选 routes
+4. 做硬过滤
+5. 做请求级过滤
+6. 对候选 routes 打分排序
+7. 选出主 route
+8. 如失败则按 fallback 策略尝试下一条
+
+## 候选 route 是怎么来的
+
+候选集合不会从全平台盲选，而是先缩小到：
+
+- 这个逻辑模型对应的 route
+- 状态为 active 的 route
+- 当前项目可访问的 pools / routes
+
+如果请求还显式带了 `provider` 或 `route`，集合会进一步收缩。
+
+## 硬过滤在过滤什么
+
+硬过滤是"必须满足，否则直接出局"的条件。常见包括：
+
+- 项目不允许该模型
+- pool policy 不允许该来源
+- route 当前不可见或不可选
+- route 健康状态不可用
+- 来源风险等级不符合要求
+- 预算、余额或限额已经明显不满足
+
+## 打分排序在考虑什么
+
+通过硬过滤后，平台才会对候选 routes 排序。当前设计重点关注：
+
+- 价格
+- 稳定性
+- 延迟
+- 风险
+- 优先级
+
+例如：
+
+- `lowest_price` 会更偏向最低价格
+- `highest_reliability` 会更偏向成功率与健康状态
+- `lowest_latency` 会更偏向低延迟来源
+
+## 手动指定 provider 或 route
+
+RouteMarket 支持用户在请求里加入：
+
+- `provider`
+- `route`
+
+但这不是"无条件强制直连"。系统仍会判断：
+
+- 当前 Key 是否允许手动指定
+- 这条 route 是否可见、可选、可访问
+- 这条 route 是否健康可用
+
+如果不满足条件，系统应该返回明确错误，而不是静默改走其他来源。
+
+## fallback 是怎么工作的
+
+fallback 的目标不是"永远成功"，而是在合理范围内提高成功率。
+
+当前设计里常见的 fallback 语义包括：
+
+- `none`
+- `same_provider_only`
+- `same_logical_model_any_provider`
+- `official_only_fallback`
+
+一个简单理解方式是：
+
+1. 主 route 失败
+2. 把失败 route 从候选里降权或移除
+3. 在剩余可用 routes 中重新选一个
+
+## 为什么这种路由层很重要
+
+因为 RouteMarket 的目标不是只连接一个上游，而是把这些能力统一起来：
+
+- 平台自营 API 池
+- 平台自营账号池
+- 用户 BYOK
+- 用户连接资源
+- 第三方 provider
+
+如果没有统一 route 抽象，用户看到的模型、真实来源、策略治理、账单归因和风险控制就会全部缠在一起。
+
+## 什么时候需要关心实际来源
+
+大多数客户端不需要关心这一点。
+
+只有在以下情况下才需要深入了解：
+
+- 指定固定服务商
+- 指定固定路由
+- 比较不同来源的行为差异
+- 解释价格或延迟差异的原因
+
+## 这对开发者意味着什么
+
+对于 API 调用方来说，最重要的结论是：
+
+- 默认情况下，你只需要关心逻辑模型名
+- 当你需要更细控制时，才显式传 `provider`、`route` 或 `routing_preference`
+- 用量、来源和计费信息应该能回到响应或观测链路里

@@ -1,0 +1,94 @@
+---
+title: "Veo 兼容视频生成"
+description: "Veo 兼容上游视频任务接口"
+---
+
+本页整理 RouteMarket 的 **Veo 兼容视频生成** 兼容接口，包括可识别的端点、结构化参数和请求示例。
+
+> 兼容性提示：页面由公开协议中的技术字段生成。具体模型、额度和路由能力以 RouteMarket 控制台及实际网关响应为准。
+
+## 参数参考
+
+### 参数表 1
+
+| 能力 | 方法 | 路径 |
+| ---- | ------ | ---------------------- |
+| 提交任务 | `POST` | `/v1/videos` |
+| 查询任务 | `GET` | `/v1/videos/{task_id}` |
+
+### 参数表 2
+
+| 模型 | 模式 | 说明 |
+| -------------------- | ----------- | --------- |
+| `veo_3_1` | 文生视频 / 多图参考 | - |
+| `veo_3_1-hd` | 文生视频 / 多图参考 | - |
+| `veo_3_1-fl` | 首尾帧 | - |
+| `veo_3_1-hd-fl` | 首尾帧 | - |
+| `veo_3_1-fast-fl` | 首尾帧 | - |
+| `veo_3_1-fast-fl-hd` | 首尾帧 | - |
+
+### 参数表 3
+
+| 字段 | 类型 | 说明 |
+| ----------- | ------ | ------------------------------------------ |
+| `id` | string | - |
+| `status` | string | 相关值：`queued`、`processing`、`completed`、`failed` |
+| `progress` | number | - |
+| `video_url` | string | - |
+| `error` | object | - |
+
+### 参数表 4
+
+| 场景 | 建议 |
+| ---- | --------------------------- |
+| 文生视频 | 使用不带 `-fl` 的模型，不传图片 |
+| 多图参考 | 使用不带 `-fl` 的模型，最多 3 张图 |
+| 首尾帧 | 使用带 `-fl` 的模型，第一张为首帧，第二张为尾帧 |
+| 更快返回 | 选择带 `fast` 的模型 |
+| 更高画质 | 选择带 `hd` 的模型 |
+
+## 请求与响应示例
+
+### 示例 1
+
+```text
+Authorization: Bearer $ROUTEMARKET_API_KEY
+```
+
+### 示例 2
+
+```json
+{
+  "id": "task_xxx",
+  "status": "queued",
+  "model": "veo_3_1",
+  "created_at": 1760000000
+}
+```
+
+### 示例 3
+
+```bash
+curl https://api.routemarket.ai/v1/videos/task_xxx \
+  -H "Authorization: Bearer $ROUTEMARKET_API_KEY"
+```
+
+### 示例 4
+
+```json
+{
+  "id": "task_xxx",
+  "status": "completed",
+  "progress": 100,
+  "video_url": "https://api.routemarket.ai/videos/task_xxx.mp4"
+}
+```
+
+## 接入说明
+
+- API 基础地址：`https://api.routemarket.ai`
+- 推荐密钥环境变量：`ROUTEMARKET_API_KEY`
+- 请求使用 `Authorization: Bearer <API_KEY>`。
+- 上线前请用实际账号验证端点、模型名、限额与异步任务状态。
+
+{/* migration-source-path: /docs/api/gemini-veo */}

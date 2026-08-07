@@ -1,0 +1,27 @@
+---
+title: Terminal agent GUI wrapper
+description: Connect a graphical wrapper around a terminal coding agent to RouteMarket.
+---
+
+Some tools provide a GUI shell on top of terminal-based coding agents (command-line tools like Claude Code or Codex), letting you view session history, diff previews, and run multiple tasks in parallel through a window interface — while the underlying calls still go through the same CLI.
+
+> Common examples of this category include [AionUI](/en/integrations/integrations-aionui), [OpenCode](/en/integrations/integrations-opencode), and [Hermes](/en/integrations/integrations-hermes) — listed here only as community-known examples, not as an officially verified or supported list from RouteMarket. Actual compatibility should be confirmed through testing.
+
+## How it connects
+
+These GUI wrappers typically don't manage the API connection themselves — they reuse the environment variables or config file of the CLI tool already configured on your machine. In other words:
+
+1. First set up RouteMarket for [Claude Code](/en/cli/cli-claude-code) or [Codex](/en/cli/cli-codex) locally, following those guides.
+2. Install the GUI wrapper and point its settings at the underlying CLI executable's path.
+3. When the wrapper spawns a subprocess, it inherits your machine's environment variables, so you don't need to re-enter the API key inside the wrapper.
+
+<DocImage src="/images/docs/integrations/terminal-agent-gui.png" alt="Terminal agent GUI wrapper interface" caption="Placeholder — replace with an actual screenshot of the tool's interface." />
+
+## Verify
+
+Start a new task in the wrapper and check its logs or status bar for a normal model response. If the wrapper exposes the underlying command it runs, confirm its `base_url` actually points to `https://api.routemarket.ai`.
+
+## Notes
+
+- If the wrapper has its own separate credential UI (rather than reusing the local CLI config), enter your [API token](/en/getting-started/token) there directly.
+- Some wrappers spawn multiple concurrent subprocesses — check whether your token's concurrency limits are sufficient.

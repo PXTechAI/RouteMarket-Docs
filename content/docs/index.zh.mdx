@@ -3,45 +3,44 @@ title: RouteMarket 文档
 description: RouteMarket 的公开产品与开发者文档入口。
 ---
 
-RouteMarket is an AI gateway and control plane for teams that want one place to manage **model access, routing, usage, and cost visibility**.
+RouteMarket 是一个面向团队的 AI 网关与控制平面，让你在一个地方统一管理**模型访问、路由、用量和成本可见性**。
 
-## What you can do with RouteMarket
+## RouteMarket 能做什么
 
-- call logical models through an OpenAI-compatible API
-- route requests across multiple possible sources
-- apply project and key-level access policy
-- inspect usage, pricing, and selected route metadata
+- 通过兼容 OpenAI 的 API 调用逻辑模型
+- 在多个可能的来源之间路由请求
+- 应用项目级和密钥级的访问策略
+- 查看用量、定价和实际选中的路由元数据
 
-## Start here
+## 从这里开始
 
-If you are new to RouteMarket, read in this order:
+如果你是第一次使用 RouteMarket，建议按以下顺序阅读：
 
-1. [Quickstart](./quickstart)
-2. [Authentication](./authentication)
-3. [Models](./models)
-4. [Chat Completions](./chat-completions)
-5. [Routing](./routing-and-models)
+1. [快速开始](/zh/quickstart)
+2. [身份验证](/zh/authentication)
+3. [对话补全](/zh/api/text/chat-completions)
+4. [路由与模型](/zh/routing-and-models)
 
-## Core ideas
+## 核心理念
 
-The platform is built around a few key ideas:
+该平台建立在几个关键理念之上：
 
-- **logical models** are what clients request
-- **routes** are what the platform selects at runtime
-- **providers, assets, and pools** describe where a request can actually go
-- **key policy** affects what models and routes are available
+- **逻辑模型**是客户端请求时使用的名字
+- **路由**是平台在运行时实际选择的目标
+- **服务商、资源和资源池**描述了请求实际可以去往哪里
+- **密钥策略**决定了哪些模型和路由是可用的
 
-If you want the conceptual version first, read [核心概念](./core-concepts).
+如果你想先了解概念层面的说明，请阅读 [核心概念](/zh/core-concepts)。
 
-## Production endpoints
+## 生产环境入口
 
-The main public endpoints are:
+主要的公开入口如下：
 
-- `routemarket.ai` — website
-- `console.routemarket.ai` — console
-- `docs.routemarket.ai` — docs
-- `api.routemarket.ai` — API gateway
+- `routemarket.ai` — 官网
+- `console.routemarket.ai` — 控制台
+- `docs.routemarket.ai` — 文档
+- `api.routemarket.ai` — API 网关
 
-## Next step
+## 下一步
 
-Go to [Quickstart](./quickstart) to make your first request.
+前往[快速开始](/zh/quickstart)发出你的第一个请求。

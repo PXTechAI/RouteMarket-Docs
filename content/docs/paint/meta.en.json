@@ -1,0 +1,9 @@
+{
+  "title": "Image Models",
+  "defaultOpen": true,
+  "pages": [
+    "index",
+    "paint-third-party-client",
+    "paint-api"
+  ]
+}

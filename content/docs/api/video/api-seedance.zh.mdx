@@ -1,0 +1,140 @@
+---
+title: "Seedance 兼容视频生成"
+description: "Seedance 旧版 /v1/videos 文生视频、图生视频、首尾帧和多素材参考接口"
+---
+
+本页整理 RouteMarket 的 **Seedance 兼容视频生成** 兼容接口，包括可识别的端点、结构化参数和请求示例。
+
+> 兼容性提示：页面由公开协议中的技术字段生成。具体模型、额度和路由能力以 RouteMarket 控制台及实际网关响应为准。
+
+## 参数参考
+
+### 参数表 1
+
+| 能力 | 方法 | 路径 |
+| ---- | ------ | ---------------------- |
+| 提交任务 | `POST` | `/v1/videos` |
+| 查询任务 | `GET` | `/v1/videos/{task_id}` |
+
+### 参数表 2
+
+| mode | 场景 | 素材 |
+| ------------------ | ----- | ---------------- |
+| `text_to_video` | 文生视频 | 不传素材 |
+| `image_to_video` | 图生视频 | 1 张图片 |
+| `first_last_frame` | 首尾帧 | 2 张图片 |
+| `multi_ref` | 多素材参考 | 多张图片，或图片、视频、音频混合 |
+
+### 参数表 3
+
+| status | 说明 |
+| ------------ | --------------------- |
+| `queued` | - |
+| `processing` | - |
+| `completed` | - |
+| `failed` | 相关值：`error.message` |
+
+### 参数表 4
+
+| 项目 | 说明 |
+| ------ | --------------------------- |
+| 素材 URL | - |
+| 多素材引用 | - |
+| 人脸素材 | 相关值：`-beta-face` |
+| 轮询间隔 | 相关值：`2`、`3` |
+
+## 请求与响应示例
+
+### 示例 1
+
+```text
+Authorization: Bearer $ROUTEMARKET_API_KEY
+```
+
+### 示例 2
+
+```json
+{
+  "id": "task_xxx",
+  "status": "queued",
+  "model": "seedance-2-official",
+  "created_at": 1760000000
+}
+```
+
+### 示例 3
+
+```bash
+curl https://api.routemarket.ai/v1/videos/task_xxx \
+  -H "Authorization: Bearer $ROUTEMARKET_API_KEY"
+```
+
+### 示例 4
+
+```json
+{
+  "id": "task_xxx",
+  "status": "completed",
+  "progress": 100,
+  "model": "seedance-2-official",
+  "data": [
+    {
+      "url": "https://api.routemarket.ai/videos/task_xxx.mp4"
+    }
+  ]
+}
+```
+
+### 示例 5
+
+```python
+import time
+import requests
+
+API_BASE = "https://api.routemarket.ai"
+API_KEY = "sk-xxx"
+
+task = requests.post(
+    f"{API_BASE}/v1/videos",
+    headers={
+        "Authorization": f"Bearer {API_KEY}",
+        "Content-Type": "application/json",
+    },
+    json={
+        "model": "seedance-2-official",
+        "mode": "text_to_video",
+        "prompt": "一只橘猫在花园里追逐蝴蝶，慢动作，电影级画质",
+        "duration": 5,
+        "resolution": "480p",
+        "ratio": "16:9",
+    },
+    timeout=60,
+).json()
+
+task_id = task["id"]
+
+while True:
+    result = requests.get(
+        f"{API_BASE}/v1/videos/{task_id}",
+        headers={"Authorization": f"Bearer {API_KEY}"},
+        timeout=60,
+    ).json()
+
+    if result["status"] == "completed":
+        print(result.get("data", [{}])[0].get("url") or result.get("video_url"))
+        break
+
+    if result["status"] == "failed":
+        raise RuntimeError(result.get("error", {}).get("message", "生成失败"))
+
+    time.sleep(3)
+```
+
+## 接入说明
+
+- API 基础地址：`https://api.routemarket.ai`
+- 推荐密钥环境变量：`ROUTEMARKET_API_KEY`
+- 请求使用 `Authorization: Bearer <API_KEY>`。
+- 上线前请用实际账号验证端点、模型名、限额与异步任务状态。
+
+{/* migration-source-path: /docs/api/seedance */}

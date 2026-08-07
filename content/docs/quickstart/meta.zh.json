@@ -1,0 +1,12 @@
+{
+  "title": "快速开始",
+  "defaultOpen": true,
+  "pages": [
+    "index",
+    "set-api-key",
+    "first-request",
+    "use-sdk",
+    "routing-control",
+    "understand-model"
+  ]
+}

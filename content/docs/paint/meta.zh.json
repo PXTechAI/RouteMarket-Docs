@@ -1,0 +1,9 @@
+{
+  "title": "图像模型",
+  "defaultOpen": true,
+  "pages": [
+    "index",
+    "paint-third-party-client",
+    "paint-api"
+  ]
+}

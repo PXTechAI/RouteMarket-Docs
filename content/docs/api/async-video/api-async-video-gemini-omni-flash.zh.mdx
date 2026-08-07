@@ -1,0 +1,84 @@
+---
+title: "Gemini Omni Flash"
+description: "gemini-omni-flash 文生视频、参考图视频、横竖屏尺寸和轮询示例"
+---
+
+本页整理 RouteMarket 的 **Gemini Omni Flash** 兼容接口，包括可识别的端点、结构化参数和请求示例。
+
+> 兼容性提示：页面由公开协议中的技术字段生成。具体模型、额度和路由能力以 RouteMarket 控制台及实际网关响应为准。
+
+## 参数参考
+
+### 参数表 1
+
+| 能力 | 方法 | 路径 |
+| ---- | ------ | -------------------- |
+| 提交任务 | `POST` | `/v1/task/submit` |
+| 查询任务 | `GET` | `/v1/task/{task_id}` |
+
+### 参数表 2
+
+| aspect\_ratio | 720p |
+| ------------- | ---------- |
+| `16:9` | `1280x720` |
+| `9:16` | `720x1280` |
+
+### 参数表 3
+
+| 场景 | 建议 |
+| ---------- | ---------------------------------------------------- |
+| 快速文生视频 | 不传参考素材，只用 `prompt` 描述画面、动作和镜头 |
+| 参考图视频 | 使用 `image_references`，最多 5 张；可用 `strength` 控制参考强度 |
+| 横屏内容 | 使用 `aspect_ratio: "16:9"` |
+| 竖屏短视频 | 使用 `aspect_ratio: "9:16"` |
+| 首帧、尾帧或视频修改 | 不使用本模型，改看 [Omni 兼容视频生成](/zh/api/video/api-omni) 或其他支持对应素材的模型 |
+
+## 请求与响应示例
+
+### 示例 1
+
+```text
+Authorization: Bearer $ROUTEMARKET_API_KEY
+```
+
+### 示例 2
+
+```json
+{
+  "id": "task_xxxxxxxxxxxxxxxx",
+  "status": "queued",
+  "phase": "queued",
+  "created_at": 1760000000,
+  "progress": null
+}
+```
+
+### 示例 3
+
+```bash
+curl https://api.routemarket.ai/v1/task/task_xxxxxxxxxxxxxxxx \
+  -H "Authorization: Bearer $ROUTEMARKET_API_KEY"
+```
+
+### 示例 4
+
+```json
+{
+  "id": "task_xxxxxxxxxxxxxxxx",
+  "status": "completed",
+  "phase": "completed",
+  "outputs": [
+    "https://api.routemarket.ai/videos/task_xxxxxxxxxxxxxxxx_0.mp4"
+  ],
+  "error": null
+}
+```
+
+## 接入说明
+
+- API 基础地址：`https://api.routemarket.ai`
+- 推荐密钥环境变量：`ROUTEMARKET_API_KEY`
+- 请求使用 `Authorization: Bearer <API_KEY>`。
+- 上线前请用实际账号验证端点、模型名、限额与异步任务状态。
+
+{/* migration-source-path: /docs/api/async-video/gemini-omni-flash */}

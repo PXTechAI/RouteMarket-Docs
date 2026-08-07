@@ -1,0 +1,10 @@
+{
+  "title": "文本与多模态",
+  "defaultOpen": true,
+  "pages": [
+    "chat-completions",
+    "responses",
+    "api-claude-messages",
+    "api-gemini"
+  ]
+}

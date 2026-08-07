@@ -1,0 +1,35 @@
+---
+title: Claude Code
+description: 通过环境变量把 Claude Code 接入到 RouteMarket。
+---
+
+Claude Code 通过环境变量读取 API 接入配置，最简单的方式是在配置文件中设置 `env` 字段。
+
+## 配置文件位置
+
+| 系统 | 路径 |
+| --- | --- |
+| macOS / Linux | `~/.claude/settings.json` |
+| Windows | `%USERPROFILE%\.claude\settings.json` |
+
+## 配置示例
+
+```json title="settings.json"
+{
+  "env": {
+    "ANTHROPIC_BASE_URL": "https://api.routemarket.ai",
+    "ANTHROPIC_AUTH_TOKEN": "your-routemarket-api-token"
+  }
+}
+```
+
+将 `your-routemarket-api-token` 替换为你在 [创建 API 密钥](/zh/getting-started/token) 中生成的密钥。
+
+## 测试
+
+```bash
+claude --version
+claude "用一句话介绍你自己"
+```
+
+如果能正常收到模型回复，说明配置生效。连接失败时参考 [Claude Code 常见问题](/zh/faq2/faq-cc)。

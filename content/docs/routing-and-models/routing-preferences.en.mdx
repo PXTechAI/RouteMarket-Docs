@@ -1,0 +1,126 @@
+---
+title: Routing Preferences
+description: How to think about lowest price, highest reliability, lowest latency, and official-only routing.
+---
+
+RouteMarket can accept a request-time routing preference to influence how it ranks candidate routes.
+
+## Supported first-pass values
+
+The current design centers around these values:
+
+- `lowest_price`
+- `highest_reliability`
+- `lowest_latency`
+- `official_only`
+
+## `lowest_price`
+
+Use this when your main goal is cost efficiency.
+
+RouteMarket will prefer lower-cost eligible routes after policy and health filtering.
+
+Good fit for:
+
+- batch workloads
+- internal tooling with flexible latency needs
+- price-sensitive high-volume usage
+
+Example:
+
+```json
+{
+  "model": "gpt-5.4",
+  "routing_preference": "lowest_price"
+}
+```
+
+## `highest_reliability`
+
+Use this when success rate matters more than absolute cost.
+
+RouteMarket will bias toward healthier and more stable routes.
+
+Good fit for:
+
+- production user-facing flows
+- automation that must avoid flaky sources
+- critical business operations
+
+Example:
+
+```json
+{
+  "model": "gpt-5.4",
+  "routing_preference": "highest_reliability"
+}
+```
+
+## `lowest_latency`
+
+Use this when response time matters most.
+
+RouteMarket will bias toward lower-latency eligible routes.
+
+Good fit for:
+
+- interactive UX
+- chat surfaces
+- low-wait-time product experiences
+
+Example:
+
+```json
+{
+  "model": "gpt-5.4",
+  "routing_preference": "lowest_latency"
+}
+```
+
+## `official_only`
+
+Use this when you want RouteMarket to avoid non-official provider paths and keep routing within official-compatible sources.
+
+Good fit for:
+
+- stricter compliance needs
+- more conservative rollout policy
+- situations where source class matters more than price
+
+Example:
+
+```json
+{
+  "model": "gpt-5.4",
+  "routing_preference": "official_only"
+}
+```
+
+## Important note
+
+A routing preference is not a blind override.
+
+RouteMarket still applies:
+
+- key and project policy
+- route visibility
+- health filtering
+- capability filtering
+- budget and quota checks
+
+That means a preferred route can still be rejected if it is not allowed or not healthy.
+
+## Practical guidance
+
+A simple default strategy is:
+
+- start with no explicit preference
+- use `highest_reliability` for production critical flows
+- use `lowest_price` for cost-sensitive background jobs
+- use `lowest_latency` for interactive paths
+- use `official_only` when source class matters most
+
+## Related docs
+
+- [Routing and Models](/en/routing-and-models)
+- [Chat Completions](/en/api/text/chat-completions)

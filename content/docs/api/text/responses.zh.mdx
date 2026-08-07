@@ -1,0 +1,57 @@
+---
+title: Responses
+description: RouteMarket 较新的 response 风格 API 接口，以及适合使用它的场景。
+---
+
+除了对话补全接口外，RouteMarket 还提供了 response 风格的 API 接口。
+
+## 接口地址
+
+```text
+POST https://api.routemarket.ai/api/gateway/v1/responses
+```
+
+## 为什么会有这个接口
+
+`chat/completions` 是最容易兼容接入的入口。
+
+当你希望使用面向未来、支持更丰富响应工作流的请求形态时，`responses` 是更合适的选择。
+
+## 最简请求形态
+
+```bash
+curl https://api.routemarket.ai/api/gateway/v1/responses \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer $ROUTEMARKET_API_KEY" \
+  -d '{
+    "model": "gpt-5.4",
+    "input": "Explain RouteMarket in one short paragraph."
+  }'
+```
+
+## 保持不变的部分
+
+尽管请求形态不同，RouteMarket 的核心运行机制依然保持一致：
+
+- 你依然是在请求一个逻辑模型
+- 你的密钥策略依然会影响可用范围
+- RouteMarket 仍然可能在多个候选来源之间路由
+- 定价、用量和路由元数据依然重要
+
+## RouteMarket 专属控制项
+
+与对话补全接口一样，该平台同样支持请求级别的路由控制字段，例如：
+
+- `provider`
+- `route`
+- `routing_preference`
+- `source_policy`
+
+如果你在两个接口之间犹豫不决，一个实用的判断标准是：
+
+- 想要最大程度的生态兼容性时，使用**对话补全**
+- 想要为新集成使用更简洁的现代化接口时，使用 **responses**
+
+## 下一步
+
+如果你是从现有的兼容 OpenAI 代码开始接入，请阅读 [对话补全](/zh/api/text/chat-completions)。

@@ -1,0 +1,26 @@
+---
+title: Hermes
+description: 在 Hermes 这类终端 AI Agent 中配置 RouteMarket。
+---
+
+Hermes 是一类以终端为主的 AI Agent 工具，除了本地交互使用外，通常也支持作为常驻服务运行、并对接消息平台机器人。
+
+> 以下为通用配置结构参考，具体界面文案和字段位置请以 Hermes 官方文档为准；本页未经 RouteMarket 官方验证。
+
+## 配置结构
+
+这类工具通常需要配置：
+
+1. **服务商 / 接口地址**：选择自定义或兼容服务商类型，接口地址填入 `https://api.routemarket.ai/v1`。
+2. **认证信息**：填入 RouteMarket 的 [API 密钥](/zh/getting-started/token)。
+3. **模型选择**：指定要使用的模型标识符与展示名称。
+4. **协议格式**：根据实际调用的模型选择对应协议（例如 Anthropic Messages 格式）。
+5. **消息平台集成**（可选）：如果需要部署为聊天机器人，配置对应平台的连接设置。
+
+<DocImage src="/images/docs/integrations/hermes-setup.png" alt="Hermes 配置 RouteMarket 端点示意" caption="占位图：待替换为实际工具设置界面截图。" />
+
+{/* TODO: 确认 Hermes 配置文件的具体路径与字段名，以及是否支持交互式安装向导 */}
+
+## 验证
+
+配置完成后，在 Hermes 中发起一次对话，确认能正常收到模型响应。如遇到鉴权失败，检查密钥是否正确、是否已过期，或参考 [常见问题](/zh/faq)。

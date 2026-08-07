@@ -1,0 +1,25 @@
+---
+title: AionUI
+description: 在 AionUI 这类多 CLI 图形化封装工具中配置 RouteMarket。
+---
+
+AionUI 是一类桌面端图形化工具，特点是能同时管理多个终端编码 Agent（如 Claude Code、Codex 等），并提供统一的窗口界面和可选的 WebUI 远程访问入口。
+
+> 以下为通用配置结构参考，具体界面文案和字段位置请以 AionUI 官方文档为准；本页未经 RouteMarket 官方验证。
+
+## 配置结构
+
+这类工具通常需要为每个接入的模型/服务商单独配置：
+
+1. **服务商类型**：在下拉菜单中选择自定义（Custom）或等价选项。
+2. **认证信息**：填入 RouteMarket 的 [API 密钥](/zh/getting-started/token)。
+3. **接口地址**：填入 `https://api.routemarket.ai/v1`。
+4. **模型选择**：从下拉菜单中选择或手动填写 `/v1/models` 返回的可用模型名。
+
+<DocImage src="/images/docs/integrations/aionui-setup.png" alt="AionUI 配置 RouteMarket 端点示意" caption="占位图：待替换为实际工具设置界面截图。" />
+
+{/* TODO: 确认 AionUI 是否支持多 Agent 并发场景下的密钥并发限制，以及是否需要针对不同 CLI 分别配置 */}
+
+## 验证
+
+配置完成后，在 AionUI 中新建一次任务或对话，确认能正常收到模型响应。如遇到鉴权失败，检查密钥是否正确、是否已过期，或参考 [常见问题](/zh/faq)。

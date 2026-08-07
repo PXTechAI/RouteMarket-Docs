@@ -1,0 +1,150 @@
+---
+title: Routing and Models
+description: How RouteMarket goes from a logical model request to a final available route, and how to query available models.
+---
+
+RouteMarket's core value isn't just proxying requests — it's turning "**unified model name -> multiple source candidates -> runtime route selection**" into a real platform capability. In RouteMarket, you usually request a **logical model name**, not a raw upstream provider model identifier — for the full relationship between logical models, providers, assets, pools, and routes, see [Core Concepts](/en/core-concepts).
+
+## Query available models
+
+Use `GET /v1/models` to list the models available to your API key.
+
+```bash
+curl https://api.routemarket.ai/v1/models \
+  -H "Authorization: Bearer $ROUTEMARKET_API_KEY"
+```
+
+The RouteMarket model list is designed to expose more than just a name. Depending on the current implementation and policy, a model entry may include fields like:
+
+- logical model code
+- display name
+- `from_price`
+- `source_count`
+- capability flags
+- whether manual source selection is supported
+
+To browse available models by group and see billing multipliers, see the [Model Marketplace](/en/routing-and-models/model-marketplace).
+
+## What happens when a request comes in
+
+When the gateway receives a request, the system uses at least these inputs to make a decision:
+
+- the API key
+- project and key-level access policy
+- the requested logical model
+- whether `provider` or `route` was explicitly specified
+- a routing preference, such as `lowest_price` or `highest_reliability`
+- the health, price, and capability of current candidate routes
+
+## A simplified version of the routing flow
+
+You can think of RouteMarket's routing process as 8 steps:
+
+1. Validate that the key is valid
+2. Load the effective policy for the project and key
+3. Find the candidate routes for the requested logical model
+4. Apply hard filters
+5. Apply request-level filters
+6. Score and rank the candidate routes
+7. Select the primary route
+8. On failure, try the next route per the fallback strategy
+
+## Where candidate routes come from
+
+The candidate set isn't chosen blindly from the whole platform — it's first narrowed down to:
+
+- routes that correspond to this logical model
+- routes with an active status
+- pools/routes accessible to the current project
+
+If the request also explicitly includes `provider` or `route`, the set narrows further.
+
+## What hard filters check
+
+Hard filters are "must be satisfied, or you're out" conditions. Common ones include:
+
+- the project doesn't allow this model
+- pool policy doesn't allow this source
+- the route is currently not visible or not selectable
+- the route's health status is unavailable
+- the source's risk level doesn't meet requirements
+- budget, balance, or quota is already clearly insufficient
+
+## What scoring and ranking consider
+
+After hard filtering, the platform ranks the surviving candidate routes. The current design focuses on:
+
+- price
+- stability
+- latency
+- risk
+- priority
+
+For example:
+
+- `lowest_price` biases toward the lowest price
+- `highest_reliability` biases toward success rate and health
+- `lowest_latency` biases toward lower-latency sources
+
+## Manually specifying a provider or route
+
+RouteMarket supports including these fields in a request:
+
+- `provider`
+- `route`
+
+But this isn't an "unconditional forced direct connection." The system still checks:
+
+- whether the current key is allowed to specify manually
+- whether the route is visible, selectable, and accessible
+- whether the route is healthy and available
+
+If conditions aren't met, the system should return a clear error rather than silently switching to a different source.
+
+## How fallback works
+
+The goal of fallback isn't "always succeed" — it's to reasonably improve the success rate.
+
+Common fallback semantics in the current design include:
+
+- `none`
+- `same_provider_only`
+- `same_logical_model_any_provider`
+- `official_only_fallback`
+
+A simple way to understand it:
+
+1. The primary route fails
+2. The failed route is deprioritized or removed from the candidate set
+3. A new route is selected from the remaining available candidates
+
+## Why this routing layer matters
+
+Because RouteMarket's goal isn't to connect to just one upstream — it's to unify these capabilities:
+
+- platform-operated API pools
+- platform-operated account pools
+- user BYOK
+- user-connected resources
+- third-party providers
+
+Without a unified route abstraction, the model a user sees, the actual source, policy governance, billing attribution, and risk control would all become tangled together.
+
+## When to care about the actual source
+
+Most clients do not need to care.
+
+You only need to look deeper when you want to:
+
+- pin a provider
+- pin a route
+- compare source behavior
+- explain pricing or latency differences
+
+## What this means for developers
+
+For API callers, the most important takeaways are:
+
+- by default, you only need to care about the logical model name
+- only pass `provider`, `route`, or `routing_preference` explicitly when you need finer control
+- usage, source, and billing information should be traceable through the response or observability pipeline

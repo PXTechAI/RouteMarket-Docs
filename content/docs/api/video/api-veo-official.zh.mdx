@@ -1,0 +1,172 @@
+---
+title: "Veo 官方视频生成"
+description: "Veo 官方上游模型的视频任务接口，支持文生视频、图生视频、首尾帧、参考图、原生音频和 4K"
+---
+
+本页整理 RouteMarket 的 **Veo 官方视频生成** 兼容接口，包括可识别的端点、结构化参数和请求示例。
+
+> 兼容性提示：页面由公开协议中的技术字段生成。具体模型、额度和路由能力以 RouteMarket 控制台及实际网关响应为准。
+
+## 参数参考
+
+### 参数表 1
+
+| 能力 | 方法 | 路径 | 说明 |
+| ---- | ------ | ------------------------------ | --------------------- |
+| 创建任务 | `POST` | `/v1/videos` | - |
+| 查询任务 | `GET` | `/v1/videos/{task_id}` | - |
+| 下载文件 | `GET` | `/v1/videos/{task_id}/content` | - |
+
+### 参数表 2
+
+| 图片数量 | 用途 | 说明 |
+| ---- | ------ | ------------------- |
+| 0 张 | - | 相关值：`prompt` |
+| 1 张 | - | - |
+| 2 张 | - | - |
+| 3 张 | - | - |
+
+### 参数表 3
+
+| 输入形式 | 示例 |
+| -------------- | ------------------------------------- |
+| HTTP(S) 图片 URL | `https://example.com/first-frame.png` |
+| Data URI | `data:image/png;base64,...` |
+| 纯 Base64 | `iVBORw0KGgo...` |
+
+### 参数表 4
+
+| 字段 | 说明 |
+| ------------ | ----------------- |
+| `id` | - |
+| `status` | 相关值：`queued` |
+| `model` | - |
+| `created_at` | - |
+
+### 参数表 5
+
+| status | 说明 |
+| ------------ | ----------------------- |
+| `queued` | - |
+| `processing` | - |
+| `completed` | - |
+| `failed` | 相关值：`error.message` |
+
+### 参数表 6
+
+| 场景 | 建议 |
+| ------------ | ------------------------------------------------ |
+| 新项目接 Veo 3.1 | 优先使用本页官方上游模型名 |
+| 已接入旧 Veo 模型 | 保持原模型名不变，继续参考 [Veo 兼容视频生成](/zh/api/video/api-gemini-veo) |
+| 需要音频 | 将对白、环境音、音效写进 `prompt` |
+| 需要排除内容 | 文生视频、首帧和首尾帧可以传 `negativePrompt` |
+| 参考图模式 | 固定传 3 张图，不传 `negativePrompt` |
+| 需要竖屏 | 设置 `aspectRatio` 为 `9:16` |
+| 需要更清晰 | 设置 `resolution` 为 `1080p` 或 `4k`，生成耗时和成本通常也会提高 |
+
+## 请求与响应示例
+
+### 示例 1
+
+```text
+Authorization: Bearer $ROUTEMARKET_API_KEY
+```
+
+### 示例 2
+
+```text
+https://api.routemarket.ai
+```
+
+### 示例 3
+
+```json
+{
+  "id": "task_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+  "status": "queued",
+  "model": "veo-3.1-generate-preview",
+  "created_at": 1775025000
+}
+```
+
+### 示例 4
+
+```bash
+curl https://api.routemarket.ai/v1/videos/task_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx \
+  -H "Authorization: Bearer $ROUTEMARKET_API_KEY"
+```
+
+### 示例 5
+
+```json
+{
+  "id": "task_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+  "status": "completed",
+  "progress": 100,
+  "model": "veo-3.1-generate-preview",
+  "video_url": "https://api.routemarket.ai/videos/task_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.mp4",
+  "created_at": 1775025000,
+  "completed_at": 1775025090
+}
+```
+
+### 示例 6
+
+```bash
+curl https://api.routemarket.ai/v1/videos/task_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx/content \
+  -H "Authorization: Bearer $ROUTEMARKET_API_KEY" \
+  --output veo-output.mp4
+```
+
+### 示例 7
+
+```python
+import time
+import requests
+
+API_BASE = "https://api.routemarket.ai"
+API_KEY = "sk-xxx"
+
+task = requests.post(
+    f"{API_BASE}/v1/videos",
+    headers={
+        "Authorization": f"Bearer {API_KEY}",
+        "Content-Type": "application/json",
+    },
+    json={
+        "model": "veo-3.1-fast-generate-preview",
+        "prompt": "黄昏海边的灯塔，镜头缓慢推进，海浪轻拍礁石，电影级光影，带环境音",
+        "duration": 8,
+        "resolution": "720p",
+        "aspectRatio": "16:9",
+    },
+    timeout=60,
+).json()
+
+task_id = task["id"]
+
+while True:
+    result = requests.get(
+        f"{API_BASE}/v1/videos/{task_id}",
+        headers={"Authorization": f"Bearer {API_KEY}"},
+        timeout=60,
+    ).json()
+
+    if result["status"] == "completed":
+        print(result.get("video_url") or result.get("data", [{}])[0].get("url"))
+        break
+
+    if result["status"] == "failed":
+        raise RuntimeError(result.get("error", {}).get("message", "生成失败"))
+
+    time.sleep(3)
+```
+
+## 接入说明
+
+- API 基础地址：`https://api.routemarket.ai`
+- 推荐密钥环境变量：`ROUTEMARKET_API_KEY`
+- 请求使用 `Authorization: Bearer <API_KEY>`。
+- 上线前请用实际账号验证端点、模型名、限额与异步任务状态。
+
+{/* migration-source-path: /docs/api/veo-official */}

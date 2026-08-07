@@ -1,0 +1,33 @@
+---
+title: "图片工作台"
+description: "通过 RouteMarket 控制台或兼容 API 生成和编辑图片。"
+---
+
+RouteMarket 的图片能力可以通过控制台工作台或兼容 API 使用。工作台适合交互式生成和编辑，API 适合批量任务与产品集成。
+
+## 使用控制台
+
+1. 登录 [RouteMarket 控制台](https://console.routemarket.ai/images)。
+2. 打开图片生成或多模态工作区。
+3. 选择账户可用的图片模型。
+
+<DocImage src="/images/docs/guide/image-workbench/model2.png" alt="RouteMarket 图片工作台模型选择示意" caption="" />
+
+4. 输入提示词；编辑任务还需要上传参考图。
+5. 设置尺寸、数量和输出格式后提交。
+
+<DocImage src="/images/docs/guide/image-workbench/model3.png" alt="RouteMarket 图片提示词与参数设置示意" caption="" />
+
+## 使用 API
+
+- Gemini 图片协议：[NanoBanana 图片](/zh/api/image/api-gemini-image)
+- OpenAI 图片协议：[GPT Image](/zh/api/image/api-gpt-image)
+- 需要轮询或回调时：[异步图片任务](/zh/api/image/api-async-image)
+
+## 使用建议
+
+- 上传素材前确认你拥有必要的使用权。
+- 批量任务先用小尺寸和少量样本验证提示词。
+- 异步任务应保存任务 ID，并为轮询设置超时与退避。
+
+{/* migration-source-path: /docs/guide/nanobanana */}

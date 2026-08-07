@@ -1,0 +1,27 @@
+---
+title: 终端 Agent GUI 封装工具
+description: 把终端编码 Agent 的图形化封装工具接入到 RouteMarket。
+---
+
+一些工具在终端编码 Agent（例如 Claude Code、Codex 这类命令行工具）之上提供了图形化外壳，让你可以在窗口界面中查看会话历史、diff 预览和多任务并行执行，而底层实际调用的仍然是同一套 CLI。
+
+> 常见的此类工具包括 [AionUI](/zh/integrations/integrations-aionui)、[OpenCode](/zh/integrations/integrations-opencode)、[Hermes](/zh/integrations/integrations-hermes) 等——以下仅作为该类工具的社区常见示例列出，并非 RouteMarket 官方验证或支持的工具列表，具体能否接入请以实际测试为准。
+
+## 接入原理
+
+这类 GUI 封装工具通常不直接管理 API 连接，而是复用你本机已经配置好的 CLI 工具的环境变量或配置文件。也就是说：
+
+1. 先按照 [Claude Code](/zh/cli/cli-claude-code) 或 [Codex](/zh/cli/cli-codex) 的说明，在本机完成 RouteMarket 的接入配置。
+2. 安装 GUI 封装工具，并在其设置中指定要调用的底层 CLI 可执行文件路径。
+3. 封装工具启动子进程时会继承你本机的环境变量，因此无需在封装工具内重复填写 API Key。
+
+<DocImage src="/images/docs/integrations/terminal-agent-gui.png" alt="终端 Agent GUI 封装工具界面示意" caption="占位图：待替换为实际工具界面截图。" />
+
+## 验证
+
+在封装工具中新建一个任务，观察日志或状态栏是否显示正常的模型响应；如果封装工具支持查看底层调用命令，可以确认其 `base_url` 确实指向 `https://api.routemarket.ai`。
+
+## 注意事项
+
+- 如果封装工具有自己独立的凭据管理界面（不复用本机 CLI 配置），则需要按其界面单独填入 [·API 密钥](/zh/getting-started/token)。
+- 部分封装工具会并发启动多个子进程，注意密钥的并发限制是否满足需求。

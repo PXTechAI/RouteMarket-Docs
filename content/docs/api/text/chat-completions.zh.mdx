@@ -1,0 +1,132 @@
+---
+title: 对话补全
+description: 最常用的 RouteMarket API 请求形态及其 RouteMarket 专属扩展字段。
+---
+
+`POST /v1/chat/completions` 是 RouteMarket 用于兼容 OpenAI 对话请求的主要入口。
+
+## 接口地址
+
+```text
+POST https://api.routemarket.ai/v1/chat/completions
+```
+
+## 最简请求
+
+```bash
+curl https://api.routemarket.ai/v1/chat/completions \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer $ROUTEMARKET_API_KEY" \
+  -d '{
+    "model": "gpt-5.4",
+    "messages": [
+      { "role": "user", "content": "Say hello from RouteMarket." }
+    ]
+  }'
+```
+
+## 兼容 OpenAI 的 SDK 示例
+
+```ts
+import OpenAI from "openai";
+
+const client = new OpenAI({
+  apiKey: process.env.ROUTEMARKET_API_KEY,
+  baseURL: "https://api.routemarket.ai/v1"
+});
+
+const completion = await client.chat.completions.create({
+  model: "gpt-5.4",
+  messages: [{ role: "user", content: "Explain RouteMarket in one sentence." }]
+});
+
+console.log(completion.choices[0]?.message?.content);
+```
+
+## RouteMarket 扩展字段
+
+除了基础的兼容 OpenAI 请求体外，RouteMarket 还支持一些额外的请求字段。
+
+### `provider`
+
+将路由限定在指定服务商范围内。
+
+```json
+{
+  "model": "gpt-5.4",
+  "provider": "openai"
+}
+```
+
+### `route`
+
+指定目标路由。
+
+```json
+{
+  "model": "gpt-5.4",
+  "route": "route_openai_primary"
+}
+```
+
+### `routing_preference`
+
+为 RouteMarket 指定路由优先级，可选值如：
+
+- `lowest_price`
+- `highest_reliability`
+- `lowest_latency`
+- `official_only`
+
+```json
+{
+  "model": "gpt-5.4",
+  "routing_preference": "highest_reliability"
+}
+```
+
+### `source_policy`
+
+为来源选择附加更细粒度的约束条件。
+
+```json
+{
+  "model": "gpt-5.4",
+  "source_policy": {
+    "exclude_risk_levels": ["high"]
+  }
+}
+```
+
+## RouteMarket 可能额外返回的内容
+
+RouteMarket 力求让用量和来源选择保持可见。一次成功的响应可能包含：
+
+- `usage`
+- `provider`
+- `route`
+- `pricing`
+
+响应体示例：
+
+```json
+{
+  "model": "gpt-5.4",
+  "provider": "openai",
+  "route": "route_openai_primary",
+  "usage": {
+    "prompt_tokens": 120,
+    "completion_tokens": 300,
+    "total_tokens": 420
+  },
+  "pricing": {
+    "currency": "USD",
+    "cost_amount": "0.00120000",
+    "sale_amount": "0.00150000"
+  }
+}
+```
+
+## 下一步
+
+如果你想了解平台在这个接口背后是如何选择路由的，请阅读 [路由](/zh/routing-and-models)。

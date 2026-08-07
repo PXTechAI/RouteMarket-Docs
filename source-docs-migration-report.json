@@ -1,0 +1,238 @@
+{
+  "generatedAt": "2026-07-15T11:07:10.095Z",
+  "sourceIndex": "https://doc.12ai.org/llms.txt",
+  "policy": {
+    "scopes": [
+      "/docs/guide",
+      "/docs/api"
+    ],
+    "storesRawSourcePages": false,
+    "preservesExistingFiles": true
+  },
+  "pages": [
+    {
+      "sourcePath": "/docs/guide",
+      "destination": "content/docs/guide/index.zh.mdx",
+      "status": "updated-generated",
+      "endpointCount": 0,
+      "tableCount": 0,
+      "codeBlockCount": 0
+    },
+    {
+      "sourcePath": "/docs/guide/registration",
+      "destination": "content/docs/guide/registration.zh.mdx",
+      "status": "updated-generated",
+      "endpointCount": 0,
+      "tableCount": 0,
+      "codeBlockCount": 0
+    },
+    {
+      "sourcePath": "/docs/guide/nanobanana",
+      "destination": "content/docs/guide/image-workbench.zh.mdx",
+      "status": "updated-generated",
+      "endpointCount": 0,
+      "tableCount": 0,
+      "codeBlockCount": 1
+    },
+    {
+      "sourcePath": "/docs/guide/chat-clients",
+      "destination": "content/docs/guide/chat-clients/index.zh.mdx",
+      "status": "updated-generated",
+      "endpointCount": 0,
+      "tableCount": 0,
+      "codeBlockCount": 0
+    },
+    {
+      "sourcePath": "/docs/guide/chat-clients/pcclients",
+      "destination": "content/docs/guide/chat-clients/chat-clients-pc.zh.mdx",
+      "status": "updated-generated",
+      "endpointCount": 0,
+      "tableCount": 0,
+      "codeBlockCount": 3
+    },
+    {
+      "sourcePath": "/docs/guide/chat-clients/iosclients",
+      "destination": "content/docs/guide/chat-clients/chat-clients-ios.zh.mdx",
+      "status": "updated-generated",
+      "endpointCount": 0,
+      "tableCount": 0,
+      "codeBlockCount": 0
+    },
+    {
+      "sourcePath": "/docs/guide/chat-clients/Androidclients",
+      "destination": "content/docs/guide/chat-clients/chat-clients-android.zh.mdx",
+      "status": "updated-generated",
+      "endpointCount": 0,
+      "tableCount": 0,
+      "codeBlockCount": 0
+    },
+    {
+      "sourcePath": "/docs/guide/chat-clients/openclaw",
+      "destination": "content/docs/guide/chat-clients/openclaw.zh.mdx",
+      "status": "updated-generated",
+      "endpointCount": 0,
+      "tableCount": 1,
+      "codeBlockCount": 8
+    },
+    {
+      "sourcePath": "/docs/guide/troubleshooting",
+      "destination": "content/docs/guide/troubleshooting.zh.mdx",
+      "status": "updated-generated",
+      "endpointCount": 0,
+      "tableCount": 0,
+      "codeBlockCount": 1
+    },
+    {
+      "sourcePath": "/docs/api",
+      "destination": "content/docs/api/index.zh.mdx",
+      "status": "preserved-existing",
+      "endpointCount": 0,
+      "tableCount": 6,
+      "codeBlockCount": 0
+    },
+    {
+      "sourcePath": "/docs/api/chat-completions",
+      "destination": "content/docs/api/text/chat-completions.zh.mdx",
+      "status": "preserved-existing",
+      "endpointCount": 0,
+      "tableCount": 4,
+      "codeBlockCount": 1
+    },
+    {
+      "sourcePath": "/docs/api/responses",
+      "destination": "content/docs/api/text/responses.zh.mdx",
+      "status": "preserved-existing",
+      "endpointCount": 2,
+      "tableCount": 3,
+      "codeBlockCount": 6
+    },
+    {
+      "sourcePath": "/docs/api/claude-messages",
+      "destination": "content/docs/api/text/api-claude-messages.zh.mdx",
+      "status": "updated-generated",
+      "endpointCount": 0,
+      "tableCount": 3,
+      "codeBlockCount": 4
+    },
+    {
+      "sourcePath": "/docs/api/gemini",
+      "destination": "content/docs/api/text/api-gemini.zh.mdx",
+      "status": "updated-generated",
+      "endpointCount": 0,
+      "tableCount": 6,
+      "codeBlockCount": 4
+    },
+    {
+      "sourcePath": "/docs/api/gemini-image",
+      "destination": "content/docs/api/image/api-gemini-image.zh.mdx",
+      "status": "updated-generated",
+      "endpointCount": 0,
+      "tableCount": 5,
+      "codeBlockCount": 3
+    },
+    {
+      "sourcePath": "/docs/api/gpt-image",
+      "destination": "content/docs/api/image/api-gpt-image.zh.mdx",
+      "status": "updated-generated",
+      "endpointCount": 0,
+      "tableCount": 3,
+      "codeBlockCount": 6
+    },
+    {
+      "sourcePath": "/docs/api/async-image",
+      "destination": "content/docs/api/image/api-async-image.zh.mdx",
+      "status": "updated-generated",
+      "endpointCount": 1,
+      "tableCount": 6,
+      "codeBlockCount": 5
+    },
+    {
+      "sourcePath": "/docs/api/videos",
+      "destination": "content/docs/api/video/api-videos.zh.mdx",
+      "status": "updated-generated",
+      "endpointCount": 1,
+      "tableCount": 4,
+      "codeBlockCount": 7
+    },
+    {
+      "sourcePath": "/docs/api/async-video",
+      "destination": "content/docs/api/async-video/index.zh.mdx",
+      "status": "updated-generated",
+      "endpointCount": 1,
+      "tableCount": 8,
+      "codeBlockCount": 9
+    },
+    {
+      "sourcePath": "/docs/api/async-video/seedance-2-0-fast",
+      "destination": "content/docs/api/async-video/api-async-video-seedance-2-0-fast.zh.mdx",
+      "status": "updated-generated",
+      "endpointCount": 0,
+      "tableCount": 4,
+      "codeBlockCount": 4
+    },
+    {
+      "sourcePath": "/docs/api/async-video/seedance-2-0",
+      "destination": "content/docs/api/async-video/api-async-video-seedance-2-0.zh.mdx",
+      "status": "updated-generated",
+      "endpointCount": 0,
+      "tableCount": 4,
+      "codeBlockCount": 4
+    },
+    {
+      "sourcePath": "/docs/api/async-video/grok-imagine-1-5",
+      "destination": "content/docs/api/async-video/api-async-video-grok-imagine-1-5.zh.mdx",
+      "status": "updated-generated",
+      "endpointCount": 0,
+      "tableCount": 3,
+      "codeBlockCount": 4
+    },
+    {
+      "sourcePath": "/docs/api/async-video/happy-horse-1-1",
+      "destination": "content/docs/api/async-video/api-async-video-happy-horse-1-1.zh.mdx",
+      "status": "updated-generated",
+      "endpointCount": 0,
+      "tableCount": 3,
+      "codeBlockCount": 4
+    },
+    {
+      "sourcePath": "/docs/api/async-video/gemini-omni-flash",
+      "destination": "content/docs/api/async-video/api-async-video-gemini-omni-flash.zh.mdx",
+      "status": "updated-generated",
+      "endpointCount": 0,
+      "tableCount": 3,
+      "codeBlockCount": 4
+    },
+    {
+      "sourcePath": "/docs/api/seedance",
+      "destination": "content/docs/api/video/api-seedance.zh.mdx",
+      "status": "updated-generated",
+      "endpointCount": 0,
+      "tableCount": 4,
+      "codeBlockCount": 5
+    },
+    {
+      "sourcePath": "/docs/api/veo-official",
+      "destination": "content/docs/api/video/api-veo-official.zh.mdx",
+      "status": "updated-generated",
+      "endpointCount": 0,
+      "tableCount": 6,
+      "codeBlockCount": 7
+    },
+    {
+      "sourcePath": "/docs/api/gemini-veo",
+      "destination": "content/docs/api/video/api-gemini-veo.zh.mdx",
+      "status": "updated-generated",
+      "endpointCount": 0,
+      "tableCount": 4,
+      "codeBlockCount": 4
+    },
+    {
+      "sourcePath": "/docs/api/omni",
+      "destination": "content/docs/api/video/api-omni.zh.mdx",
+      "status": "updated-generated",
+      "endpointCount": 0,
+      "tableCount": 5,
+      "codeBlockCount": 4
+    }
+  ]
+}

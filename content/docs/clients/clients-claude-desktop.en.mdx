@@ -1,0 +1,29 @@
+---
+title: Claude Desktop
+description: Point the Claude Desktop client at RouteMarket's gateway.
+---
+
+{/* TODO: confirm whether the current Claude Desktop version supports a custom API endpoint, and where the setting lives */}
+
+## Download
+
+Get the Claude Desktop client for your OS from the [Claude website](https://claude.ai/download).
+
+## Configure a custom endpoint
+
+<DocImage src="/images/docs/clients/claude-desktop-setup.png" alt="Claude Desktop custom API endpoint configuration" caption="Placeholder — replace with an actual screenshot of the configuration screen." />
+
+1. Open Claude Desktop and go to Settings → Developer (or the API-related section).
+2. Find the custom API endpoint field and enter `https://api.routemarket.ai`.
+3. Enter your [API token](/en/getting-started/token) as the API key.
+4. Save.
+
+## Network and proxy notes
+
+If your network requires a proxy to reach external services, make sure Claude Desktop's proxy configuration (usually the system proxy) can reach `api.routemarket.ai`.
+
+## Test
+
+After saving, start a new conversation and send a simple message to confirm you get a response.
+
+If the client doesn't support a custom endpoint, use the command-line [Claude Code](/en/cli/cli-claude-code) instead, or call the [API](/en/api) directly.

@@ -1,0 +1,24 @@
+---
+title: 第三方客户端配置
+description: 在支持自定义端点的桌面客户端中配置 RouteMarket 图像模型。
+---
+
+{/* TODO: 确认 RouteMarket 官方推荐的具体图像模型名称 */}
+
+许多支持 OpenAI 兼容协议的桌面客户端（例如类 Cherry Studio 一类的多模型客户端）都允许自定义 API 端点，可以直接接入 RouteMarket 的图像生成模型。
+
+<DocImage src="/images/docs/paint/client-setup.png" alt="第三方客户端中配置 RouteMarket 图像模型" caption="占位图：待替换为实际客户端配置界面截图。" />
+
+## 配置步骤
+
+1. 打开客户端的「模型服务」或「服务商」设置页面。
+2. 新增一个自定义服务商，类型选择「OpenAI 兼容」。
+3. API 地址填入 `https://api.routemarket.ai/v1`。
+4. API Key 填入你的 [·API 密钥](/zh/getting-started/token)。
+5. 在「模型」列表中手动添加图像模型名称（例如 `routemarket-image-default`，实际名称以控制台模型列表为准）。
+6. 保存配置，切换到图像生成面板，输入提示词测试生成。
+
+## 常见问题
+
+- 如果客户端提示「模型不存在」，检查模型名称是否与控制台展示的一致。
+- 如果生成失败，检查密钥所在分组是否包含图像模型的访问权限，参考 [模型广场](/zh/routing-and-models/model-marketplace)。

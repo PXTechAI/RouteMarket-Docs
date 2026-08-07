@@ -1,0 +1,9 @@
+{
+  "title": "Routing and Models",
+  "defaultOpen": true,
+  "pages": [
+    "index",
+    "model-marketplace",
+    "routing-preferences"
+  ]
+}

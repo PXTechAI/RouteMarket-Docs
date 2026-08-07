@@ -1,0 +1,13 @@
+{
+  "title": "Getting Started",
+  "defaultOpen": true,
+  "pages": [
+    "index",
+    "register",
+    "login",
+    "quota",
+    "token",
+    "env-check",
+    "cli-setup"
+  ]
+}

@@ -1,0 +1,27 @@
+---
+title: 4. 需要时再添加路由控制
+description: 使用 provider、route 等字段精细控制 RouteMarket 的路由行为。
+---
+
+默认请求可以保持简单。
+
+当你需要更精细的控制时，RouteMarket 还支持以下字段：
+
+- `provider`
+- `route`
+- `routing_preference`
+- `source_policy`
+
+示例：
+
+```json
+{
+  "model": "gpt-5.4",
+  "messages": [
+    { "role": "user", "content": "hello" }
+  ],
+  "routing_preference": "highest_reliability"
+}
+```
+
+接下来，了解 [`model` 字段的含义](/zh/quickstart/understand-model)。

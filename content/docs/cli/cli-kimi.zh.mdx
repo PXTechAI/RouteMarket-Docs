@@ -1,0 +1,37 @@
+---
+title: Kimi CLI
+description: 把 Kimi CLI 接入到 RouteMarket。
+---
+
+Kimi CLI 通过环境变量读取 API 接入配置。
+
+## 配置文件位置
+
+| 系统 | 路径 |
+| --- | --- |
+| macOS / Linux | `~/.kimi/settings.json` |
+| Windows | `%USERPROFILE%\.kimi\settings.json` |
+
+{/* TODO: 确认 Kimi CLI 实际的配置文件名与字段名，以下为示例结构 */}
+
+## 配置示例
+
+```json title="settings.json"
+{
+  "env": {
+    "KIMI_BASE_URL": "https://api.routemarket.ai/v1",
+    "KIMI_API_KEY": "your-routemarket-api-token"
+  }
+}
+```
+
+将 `your-routemarket-api-token` 替换为你在 [创建 API 密钥](/zh/getting-started/token) 中生成的密钥。
+
+## 测试
+
+```bash
+kimi --version
+kimi "用一句话介绍你自己"
+```
+
+如果能正常收到模型回复，说明配置生效。

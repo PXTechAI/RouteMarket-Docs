@@ -1,0 +1,100 @@
+---
+title: "Seedance 2.0"
+description: "seedance-2.0 标准版视频生成参数、高清尺寸和轮询示例"
+---
+
+本页整理 RouteMarket 的 **Seedance 2.0** 兼容接口，包括可识别的端点、结构化参数和请求示例。
+
+> 兼容性提示：页面由公开协议中的技术字段生成。具体模型、额度和路由能力以 RouteMarket 控制台及实际网关响应为准。
+
+## 参数参考
+
+### 参数表 1
+
+| 能力 | 方法 | 路径 |
+| ---- | ------ | -------------------- |
+| 提交任务 | `POST` | `/v1/task/submit` |
+| 查询任务 | `GET` | `/v1/task/{task_id}` |
+
+### 参数表 2
+
+| 组合 | 是否支持 | 说明 |
+| -------------- | ---- | --------------------------------------------------------- |
+| 纯文生视频 | 支持 | - |
+| 参考图 + 参考视频 | 支持 | 相关值：`image_references`、`video_references` |
+| 参考图 + 参考音频 | 支持 | 相关值：`image_references`、`audio_references` |
+| 首帧 | 支持 | 相关值：`start_frames[0]`、`0` |
+| 首帧 + 尾帧 | 支持 | 相关值：`start_frames[0]`、`end_frames[0]`、`0` |
+| 单独尾帧 | 不支持 | 相关值：`end_frames`、`start_frames` |
+| 参考图 + 首/尾帧 | 不支持 | 相关值：`image_references`、`start_frames`、`end_frames` |
+| 首/尾帧 + 参考视频/音频 | 不支持 | 相关值：`video_references`、`audio_references` |
+
+### 参数表 3
+
+| aspect\_ratio | 480p | 720p | 1080p |
+| ------------- | --------- | ---------- | ----------- |
+| `21:9` | `992x432` | `1470x630` | `2520x1080` |
+| `16:9` | `864x496` | `1280x720` | `1920x1080` |
+| `4:3` | `752x560` | `1112x834` | `1440x1080` |
+| `1:1` | `640x640` | `960x960` | `1440x1440` |
+| `3:4` | `560x752` | `834x1112` | `1080x1440` |
+| `9:16` | `496x864` | `720x1280` | `1080x1920` |
+
+### 参数表 4
+
+| 场景 | 建议 |
+| ---- | ----------------------------------------------------------------- |
+| 质量优先 | 使用 `1080p`，并预留更长生成时间 |
+| 速度优先 | 改用 [`seedance-2.0-fast`](/zh/api/async-video/api-async-video-seedance-2-0-fast) |
+| 首尾帧 | `end_frames` 不能单独使用，必须搭配 `start_frames` |
+| 多素材 | 参考图、参考视频、参考音频适合保持主体、动作或声音线索，但不要与首尾帧混用 |
+
+## 请求与响应示例
+
+### 示例 1
+
+```text
+Authorization: Bearer $ROUTEMARKET_API_KEY
+```
+
+### 示例 2
+
+```json
+{
+  "id": "task_xxxxxxxxxxxxxxxx",
+  "status": "queued",
+  "phase": "queued",
+  "created_at": 1760000000,
+  "progress": null
+}
+```
+
+### 示例 3
+
+```bash
+curl https://api.routemarket.ai/v1/task/task_xxxxxxxxxxxxxxxx \
+  -H "Authorization: Bearer $ROUTEMARKET_API_KEY"
+```
+
+### 示例 4
+
+```json
+{
+  "id": "task_xxxxxxxxxxxxxxxx",
+  "status": "completed",
+  "phase": "completed",
+  "outputs": [
+    "https://api.routemarket.ai/videos/task_xxxxxxxxxxxxxxxx_0.mp4"
+  ],
+  "error": null
+}
+```
+
+## 接入说明
+
+- API 基础地址：`https://api.routemarket.ai`
+- 推荐密钥环境变量：`ROUTEMARKET_API_KEY`
+- 请求使用 `Authorization: Bearer <API_KEY>`。
+- 上线前请用实际账号验证端点、模型名、限额与异步任务状态。
+
+{/* migration-source-path: /docs/api/async-video/seedance-2-0 */}

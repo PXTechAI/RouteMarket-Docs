@@ -1,0 +1,26 @@
+---
+title: OpenCode
+description: 在 OpenCode 这类跨平台终端 / IDE AI 助手中配置 RouteMarket。
+---
+
+OpenCode 是一类以终端为主、同时提供桌面端和 IDE 插件形态的 AI 编码助手，支持接入多个不同协议家族的模型服务商。
+
+> 以下为通用配置结构参考，具体界面文案和字段位置请以 OpenCode 官方文档为准；本页未经 RouteMarket 官方验证。
+
+## 配置结构
+
+这类工具通常需要配置以下几类信息：
+
+1. **服务商标识**：为这个配置项取一个便于识别的名称，例如 `routemarket`。
+2. **协议格式**：根据实际调用的模型选择对应协议（例如 Anthropic 协议或 OpenAI 协议）。
+3. **接口地址**：填入 `https://api.routemarket.ai/v1`（使用 OpenAI 协议时）或 `https://api.routemarket.ai`（使用 Anthropic 协议时，通常不需要 `/v1` 后缀）。
+4. **认证信息**：填入 RouteMarket 的 [API 密钥](/zh/getting-started/token)。
+5. **模型清单**：填写要使用的具体模型 ID 与展示名称。
+
+<DocImage src="/images/docs/integrations/opencode-setup.png" alt="OpenCode 配置 RouteMarket 端点示意" caption="占位图：待替换为实际工具设置界面截图。" />
+
+{/* TODO: 确认 OpenCode 是否需要通过某个专门的配置管理工具完成上述设置，以及具体的配置文件路径 */}
+
+## 验证
+
+配置完成后，在 OpenCode 中执行一次简单请求，确认能正常收到模型响应。如遇到鉴权失败，检查密钥是否正确、是否已过期，或参考 [常见问题](/zh/faq)。

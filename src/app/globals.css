@@ -18,3 +18,27 @@ body {
   background: var(--fd-background);
   color: var(--fd-foreground);
 }
+
+.doc-image {
+  margin: 1.5rem 0 2rem;
+}
+
+.doc-image img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 1px solid color-mix(in srgb, var(--fd-border) 88%, transparent);
+  border-radius: 8px;
+  background: #f7f8fa;
+  box-shadow:
+    0 1px 2px rgb(15 23 42 / 6%),
+    0 14px 36px rgb(15 23 42 / 8%);
+}
+
+.doc-image figcaption {
+  margin-top: 0.65rem;
+  color: var(--fd-muted-foreground);
+  font-size: 0.875rem;
+  line-height: 1.5;
+  text-align: center;
+}

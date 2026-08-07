@@ -1,6 +1,8 @@
 import { notFound } from "next/navigation";
 import { DocsBody, DocsDescription, DocsPage, DocsTitle } from "fumadocs-ui/page";
 import defaultMdxComponents from "fumadocs-ui/mdx";
+import { Step, Steps } from "fumadocs-ui/components/steps";
+import { DocImage } from "../../../components/doc-image";
 import { isSupportedLanguage } from "../../../lib/i18n";
 import { source } from "../../../lib/source";
 
@@ -25,13 +27,19 @@ export default async function Page({ params }: DocsPageProps) {
   }
 
   const MdxContent = page.data.body;
+  const mdxComponents = {
+    ...defaultMdxComponents,
+    DocImage,
+    Steps,
+    Step
+  };
 
   return (
     <DocsPage toc={page.data.toc} full={page.data.full}>
       <DocsTitle>{page.data.title}</DocsTitle>
       {page.data.description ? <DocsDescription>{page.data.description}</DocsDescription> : null}
       <DocsBody>
-        <MdxContent components={defaultMdxComponents} />
+        <MdxContent components={mdxComponents} />
       </DocsBody>
     </DocsPage>
   );

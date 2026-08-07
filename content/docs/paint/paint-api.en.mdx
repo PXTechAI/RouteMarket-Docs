@@ -1,0 +1,53 @@
+---
+title: Direct API usage
+description: Call RouteMarket's image generation API directly.
+---
+
+## Endpoint
+
+```
+POST https://api.routemarket.ai/v1/images/generations
+```
+
+## Parameters
+
+| Parameter | Type | Required | Description |
+| --- | --- | --- | --- |
+| `model` | string | Yes | The logical name of the image model |
+| `prompt` | string | Yes | The image description text |
+| `n` | integer | No | Number of images to generate, default 1 |
+| `size` | string | No | Image size, e.g. `1024x1024` |
+| `quality` | string | No | Generation quality, e.g. `standard` / `hd` — availability depends on the model |
+| `response_format` | string | No | Response format, `url` or `b64_json` |
+
+## Example
+
+```bash
+curl https://api.routemarket.ai/v1/images/generations \
+  -H "Authorization: Bearer $ROUTEMARKET_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "model": "routemarket-image-default",
+    "prompt": "A shiba inu running in the snow, illustration style",
+    "n": 1,
+    "size": "1024x1024",
+    "response_format": "url"
+  }'
+```
+
+## Example response
+
+```json
+{
+  "created": 1730000000,
+  "data": [
+    {
+      "url": "https://cdn.routemarket.ai/generated/xxxx.png"
+    }
+  ]
+}
+```
+
+{/* TODO: confirm the actual available image model list, size options, and quality options */}
+
+> For the exact supported models, parameter ranges, and pricing, check the console's model list and the [Model Marketplace](/en/routing-and-models/model-marketplace).

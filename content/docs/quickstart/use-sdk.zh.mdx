@@ -1,0 +1,22 @@
+---
+title: 3. 使用兼容 OpenAI 的 SDK
+description: 用 OpenAI SDK 接入 RouteMarket 网关。
+---
+
+```ts
+import OpenAI from "openai";
+
+const client = new OpenAI({
+  apiKey: process.env.ROUTEMARKET_API_KEY,
+  baseURL: "https://api.routemarket.ai/v1"
+});
+
+const completion = await client.chat.completions.create({
+  model: "gpt-5.4",
+  messages: [{ role: "user", content: "Explain RouteMarket in one sentence." }]
+});
+
+console.log(completion.choices[0]?.message?.content);
+```
+
+需要更精细的控制时，继续 [添加路由控制](/zh/quickstart/routing-control)。

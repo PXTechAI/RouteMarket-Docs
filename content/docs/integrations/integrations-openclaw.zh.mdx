@@ -1,0 +1,26 @@
+---
+title: OpenClaw
+description: 在 OpenClaw 这类多平台 Agent 编排 / 网关工具中配置 RouteMarket。
+---
+
+OpenClaw 是一类 Agent 编排框架，作用是把不同的模型服务商与多个消息平台（如即时通讯机器人）桥接起来，通常还提供网关 / 反向代理层面的部署能力。
+
+> 以下为通用配置结构参考，具体界面文案和字段位置请以 OpenClaw 官方文档为准；本页未经 RouteMarket 官方验证。
+
+## 配置结构
+
+这类工具的配置通常分为几个层次：
+
+1. **服务商 / 供应方设置**：选择或新增一个服务商配置，类型选择自定义或 OpenAI 兼容。
+2. **模型选择**：指定该服务商下要使用的具体模型版本。
+3. **认证信息**：填入 RouteMarket 的 [API 密钥](/zh/getting-started/token)，接口地址填入 `https://api.routemarket.ai/v1`。
+4. **消息平台集成**（可选）：如果需要把 Agent 部署为聊天机器人，配置对应平台（如 Telegram）的适配器。
+5. **网关 / 部署设置**（可选）：如果需要通过浏览器远程访问，通常涉及反向代理和 SSL 证书配置。
+
+<DocImage src="/images/docs/integrations/openclaw-setup.png" alt="OpenClaw 配置 RouteMarket 端点示意" caption="占位图：待替换为实际工具设置界面截图。" />
+
+{/* TODO: 确认 OpenClaw 部署为公网可访问网关时的安全配置建议，以及是否需要额外的访问控制设置 */}
+
+## 验证
+
+配置完成后，在 OpenClaw 中发起一次对话或任务，确认能正常收到模型响应。如遇到鉴权失败，检查密钥是否正确、是否已过期，或参考 [常见问题](/zh/faq)。

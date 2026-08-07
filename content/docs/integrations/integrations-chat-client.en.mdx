@@ -1,0 +1,32 @@
+---
+title: Chat clients and office tools
+description: Connect third-party chat clients or office collaboration tools with built-in AI chat features to RouteMarket.
+---
+
+Beyond terminal agent wrappers and IDE extensions, there's another category of tools built purely around chat — standalone desktop/mobile chat clients, or office collaboration software with built-in AI chat capabilities. These tools usually expose a "custom model provider" or "add API provider" entry in their settings.
+
+> Common examples of this category include [OpenClaw](/en/integrations/integrations-openclaw), [WorkBuddy](/en/integrations/integrations-workbuddy), and similar tools — listed here only as community-known examples of this type of tool, not as an officially verified or supported list from RouteMarket. Actual compatibility should be confirmed through testing.
+
+## Setup steps
+
+Most tools in this category use configuration fields similar to a chat client:
+
+1. Find the "Model Provider," "API Provider," or "Custom Endpoint" section in the tool's settings.
+2. Choose OpenAI Compatible, Custom OpenAI, or an equivalent option as the type.
+3. Set the Base URL to `https://api.routemarket.ai/v1`.
+4. Set the API Key to your RouteMarket project token.
+5. Set the model name to one returned by `/v1/models`.
+6. Save, then send a test message to confirm you get a response.
+
+<DocImage src="/images/docs/integrations/chat-client-setup.png" alt="Chat client configured with a RouteMarket endpoint" caption="Placeholder — replace with an actual screenshot of the tool's settings." />
+
+## Common configuration mistakes
+
+- Missing the `/v1` suffix on the Base URL, or the tool appending it a second time automatically.
+- Using a model name from the tool's preset list that your account doesn't actually have access to.
+- Stray whitespace, quotes, or line breaks around the API key.
+- Running the tool inside a restricted network (e.g. a corporate proxy) that can't reach the gateway.
+
+## Verify
+
+First confirm your API key can call `/v1/models`, then configure the tool and send a test message. If you hit an authentication error, check whether the key is correct or expired, or see the [FAQ](/en/faq).

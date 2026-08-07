@@ -9,7 +9,7 @@ This page collects the shortest useful request examples.
 
 ```bash
 curl https://api.routemarket.ai/v1/models \
-  -H "Authorization: Bearer $ROUTELAB_API_KEY"
+  -H "Authorization: Bearer $ROUTEMARKET_API_KEY"
 ```
 
 ## curl: basic chat completion
@@ -17,7 +17,7 @@ curl https://api.routemarket.ai/v1/models \
 ```bash
 curl https://api.routemarket.ai/v1/chat/completions \
   -H "Content-Type: application/json" \
-  -H "Authorization: Bearer $ROUTELAB_API_KEY" \
+  -H "Authorization: Bearer $ROUTEMARKET_API_KEY" \
   -d '{
     "model": "gpt-5.4",
     "messages": [
@@ -31,7 +31,7 @@ curl https://api.routemarket.ai/v1/chat/completions \
 ```bash
 curl https://api.routemarket.ai/v1/chat/completions \
   -H "Content-Type: application/json" \
-  -H "Authorization: Bearer $ROUTELAB_API_KEY" \
+  -H "Authorization: Bearer $ROUTEMARKET_API_KEY" \
   -d '{
     "model": "gpt-5.4",
     "messages": [
@@ -47,7 +47,7 @@ curl https://api.routemarket.ai/v1/chat/completions \
 import OpenAI from "openai";
 
 const client = new OpenAI({
-  apiKey: process.env.ROUTELAB_API_KEY,
+  apiKey: process.env.ROUTEMARKET_API_KEY,
   baseURL: "https://api.routemarket.ai/v1"
 });
 
@@ -69,7 +69,7 @@ from openai import OpenAI
 import os
 
 client = OpenAI(
-    api_key=os.environ["ROUTELAB_API_KEY"],
+    api_key=os.environ["ROUTEMARKET_API_KEY"],
     base_url="https://api.routemarket.ai/v1",
 )
 
@@ -105,7 +105,7 @@ const result = await client.chat.completions.create({
 
 ## Where to go next
 
-- [Authentication](./authentication)
-- [Models](./models)
-- [Chat Completions](./chat-completions)
-- [Routing Preferences](./routing-preferences)
+- [Authentication](/en/authentication)
+- [Routing](/en/routing-and-models)
+- [Chat Completions](/en/api/text/chat-completions)
+- [Routing Preferences](/en/routing-preferences)

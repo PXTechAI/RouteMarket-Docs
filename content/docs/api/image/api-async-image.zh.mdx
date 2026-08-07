@@ -1,0 +1,160 @@
+---
+title: "异步图片任务"
+description: "提交图片生成或编辑任务，并通过轮询或回调获取结果 URL"
+---
+
+本页整理 RouteMarket 的 **异步图片任务** 兼容接口，包括可识别的端点、结构化参数和请求示例。
+
+> 兼容性提示：页面由公开协议中的技术字段生成。具体模型、额度和路由能力以 RouteMarket 控制台及实际网关响应为准。
+
+## 接口地址
+
+- `POST https://api.routemarket.ai/v1/task/submit`
+
+## 参数参考
+
+### 参数表 1
+
+| 能力 | 方法 | 路径 |
+| ---- | ------ | -------------------- |
+| 提交任务 | `POST` | `/v1/task/submit` |
+| 查询任务 | `GET` | `/v1/task/{task_id}` |
+
+### 参数表 2
+
+| 模型 | 适合场景 |
+| -------------------------------- | ------------------- |
+| `gemini-3.1-flash-image-preview` | 日常图片生成，质量、速度和成本比较均衡 |
+| `gemini-3-pro-image-preview` | 专业素材、复杂指令、高分辨率输出 |
+| `gemini-2.5-flash-image` | 低延迟、大批量、基础图片任务 |
+| `gpt-image-2` | GPT Image 2 图片生成与编辑 |
+
+### 参数表 3
+
+| 字段 | 说明 |
+| ------------ | ----------------- |
+| `id` | - |
+| `status` | 相关值：`queued` |
+| `created_at` | - |
+
+### 参数表 4
+
+| status | 说明 |
+| ------------------- | ------------------------------------------ |
+| `queued` | - |
+| `in_progress` | - |
+| `completed` | 相关值：`outputs` |
+| `partial_completed` | 相关值：`outputs`、`error` |
+| `failed` | 相关值：`error` |
+
+### 参数表 5
+
+| 状态码 | 说明 |
+| ----- | ---------------------------------- |
+| `400` | 相关值：`model`、`input.prompt` |
+| `401` | - |
+| `402` | - |
+| `403` | - |
+| `404` | - |
+| `503` | - |
+
+### 参数表 6
+
+| 原请求来源 | 迁移方式 | 注意 |
+| ---------------------- | ---------------------------------------------- | --------------------------------------- |
+| GPT Image 2 JSON | 路径改为 `/v1/task/submit`，保留原字段 | `response_format` 会被忽略，结果从 `outputs` 读取 |
+| GPT Image 2 multipart | 路径改为 `/v1/task/submit`，继续用 `image`、`mask` 表单字段 | 可额外传 `callback_url` |
+| Gemini generateContent | 把模型放在顶层 `model`，或通过 `?model=` 传入 | 最终结果仍从 `outputs` 读取 |
+
+## 请求与响应示例
+
+### 示例 1
+
+```text
+Authorization: Bearer $ROUTEMARKET_API_KEY
+```
+
+### 示例 2
+
+```http
+POST /v1/task/submit
+Authorization: Bearer $ROUTEMARKET_API_KEY
+Content-Type: application/json
+```
+
+### 示例 3
+
+```json
+{
+  "id": "task_xxxxxxxxxxxxxxxx",
+  "status": "queued",
+  "created_at": 1760000000
+}
+```
+
+### 示例 4
+
+```bash
+curl https://api.routemarket.ai/v1/task/task_xxxxxxxxxxxxxxxx \
+  -H "Authorization: Bearer $ROUTEMARKET_API_KEY"
+```
+
+### 示例 5
+
+```python
+import time
+import requests
+
+API_BASE = "https://api.routemarket.ai"
+API_KEY = "sk-xxx"
+
+headers = {
+    "Authorization": f"Bearer {API_KEY}",
+    "Content-Type": "application/json",
+}
+
+task = requests.post(
+    f"{API_BASE}/v1/task/submit",
+    headers=headers,
+    json={
+        "model": "gemini-3.1-flash-image-preview",
+        "input": {
+            "prompt": "一张明亮的产品海报，玻璃水杯，白色背景",
+            "aspect_ratio": "1:1",
+            "image_size": "1K",
+            "n": 3,
+        },
+    },
+    timeout=60,
+).json()
+
+task_id = task["id"]
+
+while True:
+    result = requests.get(
+        f"{API_BASE}/v1/task/{task_id}",
+        headers={"Authorization": f"Bearer {API_KEY}"},
+        timeout=60,
+    ).json()
+
+    status = result["status"]
+
+    if status in ("completed", "partial_completed"):
+        for url in result.get("outputs", []):
+            print(url)
+        break
+
+    if status == "failed":
+        raise RuntimeError(result.get("error", "任务失败"))
+
+    time.sleep(3)
+```
+
+## 接入说明
+
+- API 基础地址：`https://api.routemarket.ai`
+- 推荐密钥环境变量：`ROUTEMARKET_API_KEY`
+- 请求使用 `Authorization: Bearer <API_KEY>`。
+- 上线前请用实际账号验证端点、模型名、限额与异步任务状态。
+
+{/* migration-source-path: /docs/api/async-image */}

@@ -1,0 +1,53 @@
+---
+title: API 直接调用
+description: 直接调用 RouteMarket 的图像生成 API。
+---
+
+## 接口
+
+```
+POST https://api.routemarket.ai/v1/images/generations
+```
+
+## 参数
+
+| 参数 | 类型 | 必填 | 说明 |
+| --- | --- | --- | --- |
+| `model` | string | 是 | 图像模型的逻辑名称 |
+| `prompt` | string | 是 | 图像描述文本 |
+| `n` | integer | 否 | 生成图片数量，默认 1 |
+| `size` | string | 否 | 图片尺寸，例如 `1024x1024` |
+| `quality` | string | 否 | 生成质量，例如 `standard` / `hd`，具体取值以模型支持为准 |
+| `response_format` | string | 否 | 返回格式，`url` 或 `b64_json` |
+
+## 示例
+
+```bash
+curl https://api.routemarket.ai/v1/images/generations \
+  -H "Authorization: Bearer $ROUTEMARKET_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "model": "routemarket-image-default",
+    "prompt": "一只在雪地里奔跑的柴犬，插画风格",
+    "n": 1,
+    "size": "1024x1024",
+    "response_format": "url"
+  }'
+```
+
+## 响应示例
+
+```json
+{
+  "created": 1730000000,
+  "data": [
+    {
+      "url": "https://cdn.routemarket.ai/generated/xxxx.png"
+    }
+  ]
+}
+```
+
+{/* TODO: 确认实际可用的图像模型列表、尺寸和质量取值范围 */}
+
+> 具体支持的模型、参数取值范围以及计费方式，请参考控制台的模型列表和 [模型广场](/zh/routing-and-models/model-marketplace)。

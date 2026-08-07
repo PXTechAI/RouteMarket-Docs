@@ -1,0 +1,8 @@
+{
+  "title": "Text and Multimodal",
+  "defaultOpen": true,
+  "pages": [
+    "chat-completions",
+    "responses"
+  ]
+}

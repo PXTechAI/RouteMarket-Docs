@@ -1,0 +1,24 @@
+---
+title: 4. 创建 API 密钥
+description: 在控制台创建可用于调用的 ·API 密钥。
+---
+
+进入控制台的「密钥管理」页面，点击「添加密钥」。
+
+<DocImage src="/images/docs/getting-started/api1.png" alt="RouteMarket 创建密钥页面示意" caption="API密钥" />
+
+## 表单字段说明
+
+| 字段 | 说明 |
+| --- | --- |
+| 密钥名称 | 便于识别的名称，例如 `dev` 或 `production` |
+| 密钥分组 | 决定该密钥可以访问哪些模型，详见 [模型广场](/zh/routing-and-models/model-marketplace) |
+| 过期时间 | 默认「永不过期」，可按需设置 |
+| 额度设置 | 可设置该密钥的用量上限，或选择不限额 |
+| 访问限制 | 可选，设置 IP 白名单或限制可调用的模型 |
+
+密钥通常只完整显示一次，请立即保存到密码管理器或部署平台的 Secret 中，不要写进前端代码、公开仓库或工单正文。
+
+如果你要为多个应用或环境分别管理密钥，建议按用途创建多个密钥并用名称区分，例如 `development`、`staging`、`production`，方便分别控制额度和权限、隔离用量统计。
+
+创建完成后，继续 [环境检查](/zh/getting-started/env-check)。

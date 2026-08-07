@@ -1,0 +1,29 @@
+---
+title: ChatGPT Desktop
+description: Point the ChatGPT Desktop client at RouteMarket's gateway.
+---
+
+{/* TODO: confirm whether the current ChatGPT Desktop version supports a custom API endpoint, and where the setting lives */}
+
+## Download
+
+Get the ChatGPT Desktop client for your OS from the [OpenAI website](https://openai.com/chatgpt/download/).
+
+## Configure a custom endpoint
+
+<DocImage src="/images/docs/clients/chatgpt-desktop-setup.png" alt="ChatGPT Desktop custom API endpoint configuration" caption="Placeholder — replace with an actual screenshot of the configuration screen." />
+
+1. Open ChatGPT Desktop and go to the account or connections section in Settings.
+2. Find the custom API endpoint field and enter `https://api.routemarket.ai/v1`.
+3. Enter your [API token](/en/getting-started/token) as the API key.
+4. Save.
+
+## Network and proxy notes
+
+If your network requires a proxy to reach external services, make sure the client's proxy configuration can reach `api.routemarket.ai`.
+
+## Test
+
+After saving, start a new conversation and send a simple message to confirm you get a response.
+
+If the client doesn't support a custom endpoint, use the command-line [Codex](/en/cli/cli-codex) instead, or call the [API](/en/api) directly.

@@ -1,0 +1,9 @@
+{
+  "title": "Official Clients",
+  "defaultOpen": true,
+  "pages": [
+    "index",
+    "clients-claude-desktop",
+    "clients-chatgpt-desktop"
+  ]
+}

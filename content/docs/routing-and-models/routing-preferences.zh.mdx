@@ -1,0 +1,126 @@
+---
+title: 路由偏好
+description: 如何理解最低价格、最高可靠性、最低延迟和仅官方路由这几种策略。
+---
+
+RouteMarket 可以接受请求级别的路由偏好，用来影响候选路由的排序方式。
+
+## 目前支持的取值
+
+当前设计围绕以下几个取值展开：
+
+- `lowest_price`
+- `highest_reliability`
+- `lowest_latency`
+- `official_only`
+
+## `lowest_price`
+
+当你的主要目标是控制成本时使用。
+
+在完成策略与健康检查过滤后，RouteMarket 会优先选择成本更低的合格路由。
+
+适用场景：
+
+- 批处理任务
+- 对延迟要求不严格的内部工具
+- 价格敏感的大批量用量
+
+示例：
+
+```json
+{
+  "model": "gpt-5.4",
+  "routing_preference": "lowest_price"
+}
+```
+
+## `highest_reliability`
+
+当成功率比绝对成本更重要时使用。
+
+RouteMarket 会倾向于选择更健康、更稳定的路由。
+
+适用场景：
+
+- 面向用户的生产环境流程
+- 需要避免不稳定来源的自动化任务
+- 关键业务操作
+
+示例：
+
+```json
+{
+  "model": "gpt-5.4",
+  "routing_preference": "highest_reliability"
+}
+```
+
+## `lowest_latency`
+
+当响应时间最重要时使用。
+
+RouteMarket 会倾向于选择延迟更低的合格路由。
+
+适用场景：
+
+- 交互式用户体验
+- 对话类场景
+- 对等待时间敏感的产品体验
+
+示例：
+
+```json
+{
+  "model": "gpt-5.4",
+  "routing_preference": "lowest_latency"
+}
+```
+
+## `official_only`
+
+当你希望 RouteMarket 避开非官方服务商路径、只在官方兼容来源范围内路由时使用。
+
+适用场景：
+
+- 更严格的合规需求
+- 更保守的上线策略
+- 来源类别比价格更重要的场景
+
+示例：
+
+```json
+{
+  "model": "gpt-5.4",
+  "routing_preference": "official_only"
+}
+```
+
+## 重要说明
+
+路由偏好并不是无条件的强制覆盖。
+
+RouteMarket 仍然会应用：
+
+- 密钥与项目策略
+- 路由可见性
+- 健康检查过滤
+- 能力过滤
+- 预算与配额检查
+
+这意味着即使指定了偏好路由，如果它不被允许或不健康，仍然可能被拒绝。
+
+## 实用建议
+
+一个简单的默认策略是：
+
+- 默认不显式指定偏好
+- 生产关键流程使用 `highest_reliability`
+- 成本敏感的后台任务使用 `lowest_price`
+- 交互式场景使用 `lowest_latency`
+- 来源类别最重要时使用 `official_only`
+
+## 相关文档
+
+- [路由与模型](/zh/routing-and-models)
+- [对话补全](/zh/api/text/chat-completions)

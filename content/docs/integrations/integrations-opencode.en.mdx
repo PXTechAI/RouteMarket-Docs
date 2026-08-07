@@ -1,0 +1,26 @@
+---
+title: OpenCode
+description: Configure RouteMarket in OpenCode-style cross-platform terminal / IDE AI assistants.
+---
+
+OpenCode is a category of AI coding assistant primarily built around the terminal, also available as a desktop app and IDE extension, that supports connecting to model providers across multiple different protocol families.
+
+> The following is a general configuration structure reference. Exact UI text and field locations follow OpenCode's own official documentation — this page is not officially verified by RouteMarket.
+
+## Configuration structure
+
+Tools in this category typically require configuring:
+
+1. **Provider identifier**: give this configuration a recognizable name, e.g. `routemarket`.
+2. **Protocol format**: choose the matching protocol based on the model you're calling (e.g. Anthropic protocol or OpenAI protocol).
+3. **Endpoint URL**: use `https://api.routemarket.ai/v1` when using the OpenAI protocol, or `https://api.routemarket.ai` when using the Anthropic protocol (typically no `/v1` suffix needed).
+4. **Authentication**: enter your RouteMarket [API token](/en/getting-started/token).
+5. **Model list**: specify the model IDs and display names you want to use.
+
+<DocImage src="/images/docs/integrations/opencode-setup.png" alt="OpenCode configured with a RouteMarket endpoint" caption="Placeholder — replace with an actual screenshot of the tool's settings." />
+
+{/* TODO: confirm whether OpenCode requires a dedicated configuration management tool to complete this setup, and the exact config file path */}
+
+## Verify
+
+Once configured, run a simple request in OpenCode and confirm you get a normal model response. If you hit an authentication error, check whether the key is correct or expired, or see the [FAQ](/en/faq).

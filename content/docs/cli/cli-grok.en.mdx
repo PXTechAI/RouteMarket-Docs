@@ -1,0 +1,37 @@
+---
+title: Grok CLI
+description: Connect Grok CLI to RouteMarket.
+---
+
+Grok CLI reads its API configuration from environment variables, similar to most OpenAI-compatible-protocol tools.
+
+## Config file location
+
+| OS | Path |
+| --- | --- |
+| macOS / Linux | `~/.grok/settings.json` |
+| Windows | `%USERPROFILE%\.grok\settings.json` |
+
+{/* TODO: confirm Grok CLI's actual config filename and field names — the below is an example structure */}
+
+## Example config
+
+```json title="settings.json"
+{
+  "env": {
+    "GROK_BASE_URL": "https://api.routemarket.ai/v1",
+    "GROK_API_KEY": "your-routemarket-api-token"
+  }
+}
+```
+
+Replace `your-routemarket-api-token` with the token you generated in [Create an API token](/en/getting-started/token).
+
+## Test
+
+```bash
+grok --version
+grok "introduce yourself in one sentence"
+```
+
+A normal model reply confirms the config is working.

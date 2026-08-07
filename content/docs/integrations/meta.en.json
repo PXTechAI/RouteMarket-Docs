@@ -1,0 +1,16 @@
+{
+  "title": "Third-Party Integrations",
+  "defaultOpen": true,
+  "pages": [
+    "index",
+    "integrations-terminal-agent",
+    "integrations-ide-extension",
+    "integrations-chat-client",
+    "integrations-chat-relay",
+    "integrations-aionui",
+    "integrations-opencode",
+    "integrations-openclaw",
+    "integrations-hermes",
+    "integrations-workbuddy"
+  ]
+}

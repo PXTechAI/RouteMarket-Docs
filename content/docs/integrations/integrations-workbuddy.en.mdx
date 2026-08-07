@@ -1,0 +1,25 @@
+---
+title: WorkBuddy
+description: Configure RouteMarket in WorkBuddy-style office collaboration platforms.
+---
+
+WorkBuddy is a category of office collaboration platform with built-in AI capabilities, typically used for document drafting, data analysis, and presentation creation, and supports connecting to third-party model services.
+
+> The following is a general configuration structure reference. Exact UI text and field locations follow WorkBuddy's own official documentation — this page is not officially verified by RouteMarket.
+
+## Configuration structure
+
+Tools in this category typically require configuring:
+
+1. **Endpoint URL**: use `https://api.routemarket.ai/v1`.
+2. **Authentication**: enter your RouteMarket [API token](/en/getting-started/token).
+3. **Model identifier**: enter a model ID actually available to your token's group — see the [Model Marketplace](/en/routing-and-models/model-marketplace).
+4. **Capability toggles** (optional): some tools let you separately enable or disable capabilities like tool calling or reasoning mode — make sure these match what the model actually supports, and avoid enabling capabilities the model doesn't have.
+
+<DocImage src="/images/docs/integrations/workbuddy-setup.png" alt="WorkBuddy configured with a RouteMarket endpoint" caption="Placeholder — replace with an actual screenshot of the tool's settings." />
+
+{/* TODO: confirm which token groups WorkBuddy actually supports, and how its capability toggles map to RouteMarket's model capability flags */}
+
+## Verify
+
+Once configured, run a task in WorkBuddy and confirm you get a normal model response. If you hit an authentication error or a "model not supported" message, check whether your token's group includes access to that model, or see the [FAQ](/en/faq).
